@@ -26,10 +26,10 @@ const included = [
 ];
 
 const faq = [
-  ["Why cash-pay?", "Cash-pay sleep medicine — online, today. No referral dependency and no prior authorization delay."],
+  ["Why cash-pay?", "Insurance requires referrals, prior authorizations, and formulary approvals that add months to a process that should take 24 hours. Cash-pay removes every one of those barriers. You pay, you get treated."],
   ["Is this HSA/FSA eligible?", "Yes. Sleepgenic membership is structured to be HSA/FSA eligible."],
   ["Can I cancel?", "Yes. Month-to-month pricing with cancellation anytime."],
-  ["What if I need medication?", "Independent licensed providers can prescribe where clinically indicated."],
+  ["What if I need medication?", "Independent licensed providers can prescribe where clinically indicated — trazodone or FDA-approved orexin antagonists like Quviviq where appropriate."],
 ];
 
 export default function PricingPage() {
@@ -43,7 +43,7 @@ export default function PricingPage() {
           <h1 style={{ fontFamily: S.garamond, fontSize: "clamp(2.8rem, 7vw, 5rem)", fontWeight: 500, color: S.text, lineHeight: 1.05 }}>
             $149<span style={{ color: S.text2, fontSize: "1.6rem" }}>/month</span>
           </h1>
-          <p style={{ fontFamily: S.syne, color: S.text2, marginTop: "0.75rem", fontSize: "1rem" }}>One plan. Clean.</p>
+          <p style={{ fontFamily: S.syne, color: S.text2, marginTop: "0.75rem", fontSize: "1rem" }}>One plan. No tiers. No insurance required.</p>
         </div>
       </section>
 
@@ -52,7 +52,7 @@ export default function PricingPage() {
           <div style={{ display: "grid", gap: "0.85rem" }}>
             {included.map((item) => (
               <div key={item} style={{ display: "flex", alignItems: "center", gap: "0.7rem", borderBottom: `1px solid ${S.border}`, paddingBottom: "0.7rem" }}>
-                <span style={{ fontFamily: S.mono, color: S.green, fontSize: "0.8rem" }}>●</span>
+                <span style={{ fontFamily: S.mono, color: S.green, fontSize: "0.8rem" }}>✓</span>
                 <span style={{ fontFamily: S.syne, color: S.text2, fontSize: "0.95rem" }}>{item}</span>
               </div>
             ))}
