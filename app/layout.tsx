@@ -4,7 +4,7 @@ import Nav from "@/components/Nav";
 
 export const metadata: Metadata = {
   title: "Sleepgenic — Clinical Sleep Medicine, Without the Wait",
-  description: "10-question biometric intake. Licensed provider review in 24 hours. CBT-I protocol + medication where indicated. $149/month. No insurance. No waiting room.",
+  description: "Sleep medicine access. Licensed provider review within 24 hours. Prescription where clinically indicated. Cash-pay sleep medicine — online, today.",
 };
 
 export default function RootLayout({
