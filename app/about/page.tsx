@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 const S = {
   bg: "#080c0f",
   bg2: "#0d1117",
@@ -16,32 +18,80 @@ const S = {
 export default function AboutPage() {
   return (
     <main style={{ background: S.bg, minHeight: "100vh", paddingTop: 64 }}>
+
+      {/* HERO */}
       <section style={{ padding: "5rem 2rem", borderBottom: `1px solid ${S.border}` }}>
         <div style={{ maxWidth: 980, margin: "0 auto" }}>
           <div style={{ fontFamily: S.mono, color: S.accent, fontSize: "0.72rem", letterSpacing: "0.16em", textTransform: "uppercase", marginBottom: "1rem" }}>
-            Sleep Medicine Access
+            Why Sleepgenic Exists
           </div>
-          <h1 style={{ fontFamily: S.garamond, color: S.text, fontSize: "clamp(2.8rem, 6.5vw, 5rem)", fontWeight: 500, lineHeight: 1.08, marginBottom: "1.2rem" }}>
-            Why Sleepgenic exists.
+          <h1 style={{ fontFamily: S.garamond, color: S.text, fontSize: "clamp(2.8rem, 6.5vw, 5rem)", fontWeight: 500, lineHeight: 1.08, marginBottom: "1.5rem" }}>
+            This is a distribution problem.<br />
+            <em style={{ color: S.text2 }}>Not a clinical one.</em>
           </h1>
-          <p style={{ fontFamily: S.syne, color: S.text2, fontSize: "1rem", lineHeight: 1.72, maxWidth: 900 }}>
-            Sleepgenic is a pure access platform. We monetize the access gap, not therapy delivery. CBT-I works — the evidence is unambiguous — but 60,000 patients per specialist means most people will never reach it.
+          <p style={{ fontFamily: S.syne, color: S.text2, fontSize: "1.05rem", lineHeight: 1.75, maxWidth: 720 }}>
+            CBT-I works. The evidence is unambiguous — the American Academy of Sleep Medicine identifies it as first-line treatment for chronic insomnia. The problem is not the science. The problem is that there are 60,000 patients for every certified specialist. Most people who need this will never reach it through the traditional system.
           </p>
         </div>
       </section>
 
+      {/* BODY */}
+      <section style={{ padding: "4rem 2rem", borderBottom: `1px solid ${S.border}` }}>
+        <div style={{ maxWidth: 980, margin: "0 auto", display: "grid", gridTemplateColumns: "1fr 1fr", gap: "3rem" }}>
+          <div>
+            <div style={{ fontFamily: S.mono, color: S.accent, fontSize: "0.68rem", letterSpacing: "0.14em", textTransform: "uppercase", marginBottom: "1rem" }}>
+              The Access Gap
+            </div>
+            <p style={{ fontFamily: S.syne, color: S.text2, fontSize: "0.95rem", lineHeight: 1.75, marginBottom: "1.25rem" }}>
+              The traditional pathway to sleep medicine is a 9–18 month obstacle course: PCP visit, specialist referral, possible sleep study, post-study consultation. At each step there is friction, delay, and cost. Most patients give up or go undiagnosed.
+            </p>
+            <p style={{ fontFamily: S.syne, color: S.text2, fontSize: "0.95rem", lineHeight: 1.75 }}>
+              Fewer than 500 board-certified sleep medicine specialists exist in the US. 30 million Americans have diagnosed insomnia. The math does not work.
+            </p>
+          </div>
+          <div>
+            <div style={{ fontFamily: S.mono, color: S.accent, fontSize: "0.68rem", letterSpacing: "0.14em", textTransform: "uppercase", marginBottom: "1rem" }}>
+              The Model
+            </div>
+            <p style={{ fontFamily: S.syne, color: S.text2, fontSize: "0.95rem", lineHeight: 1.75, marginBottom: "1.25rem" }}>
+              Sleepgenic is a pure access platform. We sit between the patient and the clinical infrastructure. Brand and patient acquisition on top. Licensed provider network underneath. Nothing else.
+            </p>
+            <p style={{ fontFamily: S.syne, color: S.text2, fontSize: "0.95rem", lineHeight: 1.75 }}>
+              We do not employ therapists. We do not deliver CBT-I. We do not manage the clinical relationship. We connect patients with licensed providers who make every clinical decision independently.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* THREE PRINCIPLES */}
       <section style={{ padding: "3.5rem 2rem", background: S.bg2, borderBottom: `1px solid ${S.border}` }}>
         <div style={{ maxWidth: 980, margin: "0 auto", display: "grid", gap: "1rem" }}>
           {[
-            "Sleepgenic is the distribution layer for sleep medicine access.",
-            "Technology platform only.",
-            "All clinical decisions are made by independent licensed providers.",
-          ].map((line, index) => (
-            <div key={line} style={{ background: S.surface, border: `1px solid ${S.border2}`, padding: "1.4rem 1.5rem", display: "flex", gap: "1rem" }}>
-              <span style={{ fontFamily: S.mono, color: S.text3, fontSize: "0.72rem", marginTop: "0.25rem" }}>0{index + 1}</span>
-              <p style={{ fontFamily: S.syne, color: S.text2, fontSize: "0.95rem", lineHeight: 1.62 }}>{line}</p>
+            { n: "01", text: "Sleepgenic is the distribution layer for sleep medicine access. Not a therapy platform. Not a coaching service. Access." },
+            { n: "02", text: "Technology platform only. All clinical decisions are made by independent licensed providers through our clinical infrastructure partner." },
+            { n: "03", text: "The patient we serve has been failed by the existing system — not because the medicine does not exist, but because the access does not. We fix the access." },
+          ].map((item) => (
+            <div key={item.n} style={{ background: S.surface, border: `1px solid ${S.border2}`, padding: "1.4rem 1.5rem", display: "flex", gap: "1.25rem", alignItems: "flex-start" }}>
+              <span style={{ fontFamily: S.mono, color: S.text3, fontSize: "0.72rem", marginTop: "0.25rem", flexShrink: 0 }}>{item.n}</span>
+              <p style={{ fontFamily: S.syne, color: S.text2, fontSize: "0.95rem", lineHeight: 1.65 }}>{item.text}</p>
             </div>
           ))}
+        </div>
+      </section>
+
+      {/* CTA */}
+      <section style={{ padding: "4rem 2rem", textAlign: "center" }}>
+        <div style={{ maxWidth: 980, margin: "0 auto" }}>
+          <h2 style={{ fontFamily: S.garamond, color: S.text, fontSize: "clamp(2rem, 4vw, 3rem)", fontWeight: 500, lineHeight: 1.2, marginBottom: "1rem" }}>
+            Cash-pay sleep medicine access.<br />
+            <em style={{ color: S.text2 }}>Licensed provider review in 24 hours.</em>
+          </h2>
+          <p style={{ fontFamily: S.syne, color: S.text2, fontSize: "0.95rem", marginBottom: "2rem" }}>
+            $149/month. No insurance. No referral. No waitlist.
+          </p>
+          <Link href="/start" style={{ fontFamily: S.syne, fontWeight: 600, fontSize: "0.82rem", letterSpacing: "0.08em", textTransform: "uppercase", color: "#fff", background: S.accent, padding: "1rem 2rem", display: "inline-block", textDecoration: "none" }}>
+            Start Your Assessment — Coming Soon
+          </Link>
         </div>
       </section>
 
