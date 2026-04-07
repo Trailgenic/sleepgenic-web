@@ -66,8 +66,7 @@ export default function Home() {
               marginBottom: "1.75rem",
               letterSpacing: "-0.01em",
             }}>
-              Finally. Sleep medicine<br />
-              <em style={{ color: S.text2 }}>that doesn&apos;t make you<br />wait a year.</em>
+              Finally. A sleep prescription without the 12-month waitlist.
             </h1>
 
             {/* Sub */}
@@ -79,8 +78,7 @@ export default function Home() {
               marginBottom: "2.5rem",
               maxWidth: 560,
             }}>
-              30 million Americans have diagnosed insomnia. Fewer than 500 certified specialists exist. The waitlist is over a year.{" "}
-              <span style={{ color: S.text }}>We are the access layer.</span>
+              Licensed provider review within 24 hours. $149/month. No insurance required.
             </p>
 
             {/* CTA row */}
@@ -193,8 +191,8 @@ export default function Home() {
               <div style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
                 {[
                   { step: "10-question biometric intake", detail: "Answerable from your Garmin, Whoop, or Apple Watch data. Takes 5 minutes." },
-                  { step: "Licensed provider review in 24 hours", detail: "A real clinician — not an algorithm — reviews your case and responds." },
-                  { step: "CBT-I protocol delivered", detail: "The evidence-based behavioral treatment, structured and personalized for you." },
+                  { step: "Licensed provider review within 24 hours", detail: "A real clinician — not an algorithm — reviews your case and responds." },
+                  { step: "CBT-I protocol assigned by your provider", detail: "Prescription where clinically indicated." },
                   { step: "Medication where clinically indicated", detail: "Trazodone off-label or FDA-approved orexin antagonists like Quviviq — step-up only." },
                 ].map((item, i) => (
                   <div key={i} style={{
@@ -247,7 +245,7 @@ export default function Home() {
           <div style={{ display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gap: "1px", background: S.border }}>
             {[
               { icon: "◈", text: "You track HRV on a wearable and the numbers haven't been right for months." },
-              { icon: "◈", text: "You&apos;ve read the sleep hygiene articles. You&apos;ve tried the magnesium. It didn&apos;t work." },
+              { icon: "◈", text: "You&apos;ve already tried consumer sleep advice and still need clinical intervention." },
               { icon: "◈", text: "You want a clinical answer, not another app that plays white noise." },
               { icon: "◈", text: "You&apos;re not willing to wait a year for a specialist who might prescribe Ambien anyway." },
             ].map((item, i) => (
@@ -280,9 +278,9 @@ export default function Home() {
             {[
               "Biometric intake assessment",
               "Licensed provider review within 24 hours",
-              "CBT-I protocol delivery",
+              "CBT-I protocol where indicated",
               "Medication management where indicated",
-              "Ongoing async provider relationship",
+              "Continued access to licensed clinical oversight",
               "HSA/FSA eligible",
             ].map((item) => (
               <div key={item} style={{ display: "flex", gap: "0.875rem", alignItems: "center", paddingBottom: "0.75rem", borderBottom: `1px solid ${S.border}` }}>
@@ -314,11 +312,11 @@ export default function Home() {
             Get Started
           </div>
           <h2 style={{ fontFamily: S.garamond, fontSize: "clamp(2.5rem, 5vw, 4rem)", fontWeight: 500, color: S.text, lineHeight: 1.15, marginBottom: "1.5rem" }}>
-            You&apos;ve tracked the data.<br />
-            <em style={{ color: S.text2 }}>Now get the diagnosis.</em>
+            Get reviewed by a licensed provider.<br />
+            <em style={{ color: S.text2 }}>No referral loop.</em>
           </h2>
           <p style={{ fontFamily: S.syne, fontSize: "1rem", color: S.text2, marginBottom: "2.5rem", maxWidth: 480, margin: "0 auto 2.5rem" }}>
-            10 questions. 5 minutes. Licensed provider review in 24 hours.
+            10 questions. 5 minutes. Licensed provider review within 24 hours.
           </p>
           <div style={{ display: "flex", gap: "1rem", justifyContent: "center", flexWrap: "wrap" }}>
             <Link href="/start" style={{

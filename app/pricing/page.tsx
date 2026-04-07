@@ -17,19 +17,19 @@ const S = {
 };
 
 const included = [
-  "Biometric intake assessment",
-  "Licensed provider review within 24 hours",
-  "CBT-I protocol delivery",
-  "Medication management where indicated",
-  "Ongoing async provider relationship",
+  "10-question biometric intake assessment",
+  "Licensed provider clinical review within 24 hours",
+  "CBT-I protocol where indicated",
+  "Prescription where clinically indicated — trazodone or FDA-approved orexin antagonist",
   "HSA/FSA eligible",
+  "Cancel anytime",
 ];
 
 const faq = [
-  ["Why cash-pay?", "Cash-pay removes utilization barriers, referral dependency, and prior authorization delays."],
+  ["Why cash-pay?", "Cash-pay sleep medicine — online, today. No referral dependency and no prior authorization delay."],
   ["Is this HSA/FSA eligible?", "Yes. Sleepgenic membership is structured to be HSA/FSA eligible."],
   ["Can I cancel?", "Yes. Month-to-month pricing with cancellation anytime."],
-  ["What if I need medication?", "Independent licensed providers can prescribe when clinically indicated."],
+  ["What if I need medication?", "Independent licensed providers can prescribe where clinically indicated."],
 ];
 
 export default function PricingPage() {
@@ -38,7 +38,7 @@ export default function PricingPage() {
       <section style={{ padding: "5rem 2rem", borderBottom: `1px solid ${S.border}` }}>
         <div style={{ maxWidth: 1000, margin: "0 auto" }}>
           <div style={{ fontFamily: S.mono, color: S.accent, fontSize: "0.72rem", letterSpacing: "0.16em", textTransform: "uppercase", marginBottom: "1rem" }}>
-            Pricing
+            Sleep Medicine Access
           </div>
           <h1 style={{ fontFamily: S.garamond, fontSize: "clamp(2.8rem, 7vw, 5rem)", fontWeight: 500, color: S.text, lineHeight: 1.05 }}>
             $149<span style={{ color: S.text2, fontSize: "1.6rem" }}>/month</span>

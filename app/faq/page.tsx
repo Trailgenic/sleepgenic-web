@@ -15,14 +15,18 @@ const S = {
 };
 
 const qa = [
-  ["What is CBT-I and why is it first-line treatment?", "CBT-I is a structured behavioral protocol for chronic insomnia and is first-line per AASM guidance before routine medication-first approaches."],
-  ["What medications can be prescribed?", "Medication options are determined by independent licensed providers when clinically indicated, including non-benzodiazepine and orexin-pathway options where appropriate."],
-  ["Is this covered by insurance?", "Sleepgenic uses a cash-pay model. Pricing is transparent at $149/month and is HSA/FSA eligible."],
-  ["What wearable data do I need?", "Your intake is designed to be answerable from Garmin, Whoop, or Apple Watch data plus your symptom history."],
-  ["What happens after I submit my intake?", "Your case enters clinical review by an independent licensed provider with a target turnaround of 24 hours."],
-  ["How is Sleepgenic different from seeing a sleep specialist?", "Sleepgenic is a technology distribution layer designed to reduce access latency while preserving provider-led clinical decisions."],
-  ["Is my data private and secure?", "Sleepgenic is designed around minimal data collection and secure handling standards appropriate for clinical workflows."],
+  ["What is CBT-I and why is it first-line treatment?", "CBT-I is first-line for chronic insomnia per AASM guidance because it addresses the core mechanisms of insomnia without defaulting to medication-first care."],
+  ["What medications can be prescribed?", "Medication decisions are made by independent licensed providers. Prescription where clinically indicated may include trazodone or FDA-approved orexin antagonists."],
+  ["Is this covered by insurance?", "Sleepgenic uses a cash-pay model at $149/month and is HSA/FSA eligible."],
+  ["What wearable data do I need?", "The intake is designed to be answerable from Garmin, Whoop, or Apple Watch data plus your symptom history."],
+  ["What happens after I submit my intake?", "Licensed provider review within 24 hours with an independent clinical determination."],
+  ["How is Sleepgenic different from seeing a sleep specialist?", "Sleepgenic is the sleep medicine access layer designed to reduce access latency while preserving provider-led decisions."],
+  ["Is my data private and secure?", "Sleepgenic is built for secure clinical workflows with minimal data collection."],
   ["Can I cancel anytime?", "Yes. Membership is month-to-month and can be canceled anytime."],
+  ["Does Sleepgenic deliver CBT-I therapy?", "Sleepgenic is a technology platform that connects you with licensed providers. Your provider may assign a CBT-I protocol as part of your clinical outcome. Sleepgenic does not employ therapists or deliver behavioral therapy directly."],
+  ["What is the ongoing relationship after my first review?", "Your subscription gives you continued access to licensed clinical oversight for prescription management and follow-up. Your provider manages your care independently. Sleepgenic provides the access layer."],
+  ["Is Sleepgenic a medical provider?", "No. Sleepgenic is a technology platform. All clinical decisions are made by independent licensed providers through our clinical infrastructure partner. Sleepgenic does not practice medicine."],
+  ["How is this different from just getting a prescription from my doctor?", "The traditional pathway to a sleep prescription can cost $1,000–4,000 out of pocket and take 9–18 months — PCP visit, specialist referral, possible sleep study, post-study consultation. Sleepgenic takes 24 hours and costs $149/month."],
 ];
 
 export default function FaqPage() {
@@ -34,7 +38,7 @@ export default function FaqPage() {
             Frequently Asked Questions
           </div>
           <h1 style={{ fontFamily: S.garamond, color: S.text, fontSize: "clamp(2.6rem, 6.5vw, 4.8rem)", fontWeight: 500, lineHeight: 1.1 }}>
-            Clinical operations, clearly explained.
+            Clinical access, clearly explained.
           </h1>
         </div>
       </section>

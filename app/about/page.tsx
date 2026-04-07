@@ -19,13 +19,13 @@ export default function AboutPage() {
       <section style={{ padding: "5rem 2rem", borderBottom: `1px solid ${S.border}` }}>
         <div style={{ maxWidth: 980, margin: "0 auto" }}>
           <div style={{ fontFamily: S.mono, color: S.accent, fontSize: "0.72rem", letterSpacing: "0.16em", textTransform: "uppercase", marginBottom: "1rem" }}>
-            Why We Exist
+            Sleep Medicine Access
           </div>
           <h1 style={{ fontFamily: S.garamond, color: S.text, fontSize: "clamp(2.8rem, 6.5vw, 5rem)", fontWeight: 500, lineHeight: 1.08, marginBottom: "1.2rem" }}>
             Why Sleepgenic exists.
           </h1>
-          <p style={{ fontFamily: S.syne, color: S.text2, fontSize: "1rem", lineHeight: 1.72, maxWidth: 860 }}>
-            The access gap is a distribution problem, not a clinical one. CBT-I works — the evidence is unambiguous. With roughly 60,000 patients per specialist, most people will never access guideline-first insomnia care through traditional channels.
+          <p style={{ fontFamily: S.syne, color: S.text2, fontSize: "1rem", lineHeight: 1.72, maxWidth: 900 }}>
+            Sleepgenic is a pure access platform. We monetize the access gap, not therapy delivery. CBT-I works — the evidence is unambiguous — but 60,000 patients per specialist means most people will never reach it.
           </p>
         </div>
       </section>
@@ -33,8 +33,8 @@ export default function AboutPage() {
       <section style={{ padding: "3.5rem 2rem", background: S.bg2, borderBottom: `1px solid ${S.border}` }}>
         <div style={{ maxWidth: 980, margin: "0 auto", display: "grid", gap: "1rem" }}>
           {[
-            "Sleepgenic is the distribution layer.",
-            "Sleepgenic is a technology platform.",
+            "Sleepgenic is the distribution layer for sleep medicine access.",
+            "Technology platform only.",
             "All clinical decisions are made by independent licensed providers.",
           ].map((line, index) => (
             <div key={line} style={{ background: S.surface, border: `1px solid ${S.border2}`, padding: "1.4rem 1.5rem", display: "flex", gap: "1rem" }}>
