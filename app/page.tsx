@@ -332,24 +332,24 @@ export default function Home() {
         </div>
       </section>
 
-      {/* FOOTER */}
-      <footer style={{
-        borderTop: `1px solid ${S.border}`,
-        padding: "2rem",
-        background: S.bg,
-        display: "flex", alignItems: "center", justifyContent: "space-between",
-        flexWrap: "wrap", gap: "1rem",
-      }}>
-        <div style={{ fontFamily: S.syne, fontWeight: 700, fontSize: "0.9rem", letterSpacing: "0.04em", color: S.text }}>SLEEPGENIC</div>
-        <div style={{ fontFamily: S.mono, fontSize: "0.65rem", color: S.text3, letterSpacing: "0.06em" }}>
-          Sleepgenic is a technology platform. All clinical decisions are made by independent licensed providers.
-        </div>
-        <div style={{ display: "flex", gap: "1.5rem" }}>
-          {[["Privacy", "#"], ["Terms", "#"], ["About", "/about"]].map(([l, h]) => (
-            <a key={l} href={h} style={{ fontFamily: S.syne, fontSize: "0.75rem", color: S.text3, textDecoration: "none", letterSpacing: "0.05em" }}>{l}</a>
-          ))}
-        </div>
-      </footer>
+     {/* FOOTER */}
+<footer style={{
+  borderTop: `1px solid ${S.border}`,
+  padding: "1.5rem 2rem",
+  background: S.bg,
+  display: "flex", alignItems: "center", justifyContent: "space-between",
+  flexWrap: "wrap", gap: "1rem",
+}}>
+  <div style={{ fontFamily: S.syne, fontWeight: 700, fontSize: "0.9rem", letterSpacing: "0.04em", color: S.text }}>SLEEPGENIC</div>
+  <div style={{ display: "flex", gap: "1.5rem", alignItems: "center" }}>
+    {[["Privacy", "#"], ["Terms", "#"], ["About", "/about"]].map(([l, h]) => (
+      <a key={l} href={h} style={{ fontFamily: S.syne, fontSize: "0.8rem", color: S.text2, textDecoration: "none", letterSpacing: "0.05em" }}>{l}</a>
+    ))}
+  </div>
+  <div style={{ fontFamily: S.mono, fontSize: "0.65rem", color: S.text3, letterSpacing: "0.06em", maxWidth: 480, textAlign: "right" }}>
+    Sleepgenic is a technology platform. All clinical decisions are made by independent licensed providers.
+  </div>
+</footer>
     </main>
   );
 }
