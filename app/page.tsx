@@ -67,6 +67,7 @@ export default function Home() {
               letterSpacing: "-0.01em",
             }}>
               Finally. A sleep prescription without the 12-month waitlist.
+              <em style={{ color: S.text2 }}>Licensed provider review in 24 hours.</em>
             </h1>
 
             {/* Sub */}
@@ -192,7 +193,7 @@ export default function Home() {
                 {[
                   { step: "10-question biometric intake", detail: "Answerable from your Garmin, Whoop, or Apple Watch data. Takes 5 minutes." },
                   { step: "Licensed provider review within 24 hours", detail: "A real clinician — not an algorithm — reviews your case and responds." },
-                  { step: "CBT-I protocol assigned by your provider", detail: "Prescription where clinically indicated." },
+                  { step: "CBT-I protocol assigned by your provider", detail: "Your provider assigns a CBT-I protocol as part of your clinical outcome. Sleepgenic connects you — your provider delivers the determination." },
                   { step: "Medication where clinically indicated", detail: "Trazodone off-label or FDA-approved orexin antagonists like Quviviq — step-up only." },
                 ].map((item, i) => (
                   <div key={i} style={{
@@ -245,9 +246,9 @@ export default function Home() {
           <div style={{ display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gap: "1px", background: S.border }}>
             {[
               { icon: "◈", text: "You track HRV on a wearable and the numbers haven't been right for months." },
-              { icon: "◈", text: "You&apos;ve already tried consumer sleep advice and still need clinical intervention." },
+              { icon: "◈", text: "You’ve already tried consumer sleep advice and still need clinical intervention." },
               { icon: "◈", text: "You want a clinical answer, not another app that plays white noise." },
-              { icon: "◈", text: "You&apos;re not willing to wait a year for a specialist who might prescribe Ambien anyway." },
+              { icon: "◈", text: "You’re not willing to wait a year for a specialist who might prescribe Ambien anyway." },
             ].map((item, i) => (
               <div key={i} style={{ background: S.bg, padding: "2rem 2.5rem", display: "flex", gap: "1.25rem", alignItems: "flex-start" }}>
                 <span style={{ fontFamily: S.mono, color: S.accent, fontSize: "1rem", marginTop: "0.1rem", flexShrink: 0 }}>{item.icon}</span>

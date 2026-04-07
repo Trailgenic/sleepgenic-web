@@ -26,7 +26,7 @@ const qa = [
   ["Does Sleepgenic deliver CBT-I therapy?", "Sleepgenic is a technology platform that connects you with licensed providers. Your provider may assign a CBT-I protocol as part of your clinical outcome. Sleepgenic does not employ therapists or deliver behavioral therapy directly."],
   ["What is the ongoing relationship after my first review?", "Your subscription gives you continued access to licensed clinical oversight for prescription management and follow-up. Your provider manages your care independently. Sleepgenic provides the access layer."],
   ["Is Sleepgenic a medical provider?", "No. Sleepgenic is a technology platform. All clinical decisions are made by independent licensed providers through our clinical infrastructure partner. Sleepgenic does not practice medicine."],
-  ["How is this different from just getting a prescription from my doctor?", "The traditional pathway to a sleep prescription can cost $1,000–4,000 out of pocket and take 9–18 months — PCP visit, specialist referral, possible sleep study, post-study consultation. Sleepgenic takes 24 hours and costs $149/month."],
+  ["How is this different from just getting a prescription from my doctor?", "The traditional pathway to a sleep prescription costs $1,000–4,000 out of pocket and takes 9–18 months — PCP visit, specialist referral, possible sleep study, post-study consultation. Sleepgenic takes 24 hours and costs $149/month."],
 ];
 
 export default function FaqPage() {

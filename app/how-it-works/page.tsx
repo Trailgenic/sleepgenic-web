@@ -30,8 +30,8 @@ const steps = [
     detail: "Sleepgenic provides the access layer and clinical routing infrastructure.",
   },
   {
-    title: "Receive your outcome — a CBT-I protocol, a prescription where clinically indicated, or both.",
-    detail: "Trazodone or FDA-approved orexin antagonists like Quviviq where appropriate.",
+    title: "Receive your clinical outcome",
+    detail: "Your provider issues a CBT-I protocol, a prescription where clinically indicated, or both. Trazodone or FDA-approved orexin antagonists like Quviviq where appropriate.",
   },
 ];
 
