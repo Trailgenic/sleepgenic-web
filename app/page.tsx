@@ -85,7 +85,7 @@ export default function Home() {
 
             {/* CTA row */}
             <div style={{ display: "flex", gap: "1rem", alignItems: "center", flexWrap: "wrap", marginBottom: "4rem" }}>
-              <a href="#" style={{
+              <Link href="/start" style={{
                 fontFamily: S.syne, fontWeight: 600, fontSize: "0.85rem",
                 letterSpacing: "0.08em", textTransform: "uppercase",
                 padding: "1rem 2.25rem", background: S.accent, color: "#fff",
@@ -93,7 +93,7 @@ export default function Home() {
                 boxShadow: "0 0 30px rgba(59,130,246,0.2)",
               }}>
                 Start Your Assessment — Coming Soon
-              </a>
+              </Link>
               <Link href="/how-it-works" style={{
                 fontFamily: S.syne, fontWeight: 500, fontSize: "0.8rem",
                 letterSpacing: "0.06em", textTransform: "uppercase",
@@ -321,7 +321,7 @@ export default function Home() {
             10 questions. 5 minutes. Licensed provider review in 24 hours.
           </p>
           <div style={{ display: "flex", gap: "1rem", justifyContent: "center", flexWrap: "wrap" }}>
-            <a href="#" style={{
+            <Link href="/start" style={{
               fontFamily: S.syne, fontWeight: 600, fontSize: "0.875rem",
               letterSpacing: "0.08em", textTransform: "uppercase",
               padding: "1.1rem 2.5rem", background: S.accent, color: "#fff",
@@ -329,7 +329,7 @@ export default function Home() {
               boxShadow: "0 0 40px rgba(59,130,246,0.25)",
             }}>
               Start Your Assessment — Coming Soon
-            </a>
+            </Link>
             <Link href="/faq" style={{
               fontFamily: S.syne, fontWeight: 500, fontSize: "0.8rem",
               letterSpacing: "0.06em", textTransform: "uppercase",
