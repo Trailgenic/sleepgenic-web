@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect } from "react";
+import { useCallback } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import IntakeShell from "@/components/intake/IntakeShell";
 import { useIntake } from "@/components/intake/IntakeContext";
@@ -61,17 +61,6 @@ export default function IntakeQuestionPage({ params }: { params: { step: string 
 
   const requiredComplete =
     Array.isArray(value) ? value.length > 0 : typeof value === "string" ? value.trim().length > 0 : false;
-
-  useEffect(() => {
-    if (question.type !== "single") {
-      return;
-    }
-
-    if (typeof value === "string" && value) {
-      const timer = setTimeout(() => goNext(), 300);
-      return () => clearTimeout(timer);
-    }
-  }, [goNext, question.type, value]);
 
   if (invalidStep) {
     return <IntakeShell>Invalid intake step.</IntakeShell>;
