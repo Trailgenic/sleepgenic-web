@@ -1,7 +1,6 @@
 import Link from "next/link";
 
 const S = {
-  // Colors
   bg: "#080c0f",
   bg2: "#0d1117",
   surface: "#141c24",
@@ -14,7 +13,6 @@ const S = {
   accent: "#3b82f6",
   accentDim: "#0f2747",
   green: "#22c55e",
-  // Fonts
   garamond: "'EB Garamond', serif",
   syne: "'Syne', sans-serif",
   mono: "'DM Mono', monospace",
@@ -34,14 +32,12 @@ export default function Home() {
         position: "relative",
         overflow: "hidden",
       }}>
-        {/* Background grid */}
         <div style={{
           position: "absolute", inset: 0,
           backgroundImage: "linear-gradient(rgba(30,45,61,0.3) 1px, transparent 1px), linear-gradient(90deg, rgba(30,45,61,0.3) 1px, transparent 1px)",
           backgroundSize: "60px 60px",
           maskImage: "radial-gradient(ellipse 80% 80% at 50% 50%, black 40%, transparent 100%)",
         }} />
-        {/* Glow */}
         <div style={{
           position: "absolute", top: "20%", left: "50%", transform: "translateX(-50%)",
           width: 600, height: 600, borderRadius: "50%",
@@ -51,12 +47,10 @@ export default function Home() {
 
         <div style={{ maxWidth: 1200, margin: "0 auto", width: "100%", position: "relative", zIndex: 1 }}>
           <div style={{ maxWidth: 760 }}>
-            {/* Label */}
             <div style={{ fontFamily: S.mono, fontSize: "0.7rem", letterSpacing: "0.18em", textTransform: "uppercase", color: S.accent, marginBottom: "1.5rem" }}>
               Clinical Sleep Medicine
             </div>
 
-            {/* Headline */}
             <h1 style={{
               fontFamily: S.garamond,
               fontSize: "clamp(3rem, 7vw, 5.5rem)",
@@ -66,11 +60,10 @@ export default function Home() {
               marginBottom: "1.75rem",
               letterSpacing: "-0.01em",
             }}>
-              Finally. A sleep prescription without the 12-month waitlist.
-              <em style={{ color: S.text2 }}>Licensed provider review in 24 hours.</em>
+              Finally. A sleep prescription<br />
+              <em style={{ color: S.text2 }}>without the 12-month waitlist.</em>
             </h1>
 
-            {/* Sub */}
             <p style={{
               fontFamily: S.syne,
               fontSize: "1.125rem",
@@ -79,10 +72,10 @@ export default function Home() {
               marginBottom: "2.5rem",
               maxWidth: 560,
             }}>
-              Licensed provider review within 24 hours. $149/month. No insurance required.
+              Licensed provider review within 24 hours.{" "}
+              <span style={{ color: S.text }}>$149/month. No insurance required.</span>
             </p>
 
-            {/* CTA row */}
             <div style={{ display: "flex", gap: "1rem", alignItems: "center", flexWrap: "wrap", marginBottom: "4rem" }}>
               <Link href="/start" style={{
                 fontFamily: S.syne, fontWeight: 600, fontSize: "0.85rem",
@@ -103,7 +96,6 @@ export default function Home() {
               </Link>
             </div>
 
-            {/* Stats row */}
             <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "2rem", maxWidth: 560 }}>
               {[
                 ["30M", "Diagnosed insomnia patients in the US"],
@@ -119,17 +111,16 @@ export default function Home() {
           </div>
         </div>
 
-        {/* Right: floating data panel */}
         <div style={{
           position: "absolute", right: "4vw", top: "50%", transform: "translateY(-50%)",
           width: 280, display: "flex", flexDirection: "column", gap: "0.75rem",
           opacity: 0.85,
-        }} className="hidden-mobile">
+        }}>
           {[
-            { label: "HRV Baseline", value: "42 ms", delta: "−8 ms", bad: true },
-            { label: "Deep Sleep", value: "0:48", delta: "11%", bad: true },
-            { label: "Sleep Efficiency", value: "71%", delta: "↓", bad: true },
-            { label: "Wake Episodes", value: "6", delta: "↑", bad: true },
+            { label: "HRV Baseline", value: "42 ms", delta: "−8 ms" },
+            { label: "Deep Sleep", value: "0:48", delta: "11%" },
+            { label: "Sleep Efficiency", value: "71%", delta: "↓" },
+            { label: "Wake Episodes", value: "6", delta: "↑" },
           ].map((item) => (
             <div key={item.label} style={{
               background: S.surface, border: `1px solid ${S.border}`,
@@ -187,14 +178,14 @@ export default function Home() {
                 The Solution
               </div>
               <h2 style={{ fontFamily: S.garamond, fontSize: "clamp(2rem, 4vw, 3rem)", fontWeight: 500, color: S.text, lineHeight: 1.2, marginBottom: "1.5rem" }}>
-                Async clinical care, built on the evidence.
+                Cash-pay sleep medicine access. Built on the evidence.
               </h2>
               <div style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
                 {[
                   { step: "10-question biometric intake", detail: "Answerable from your Garmin, Whoop, or Apple Watch data. Takes 5 minutes." },
-                  { step: "Licensed provider review within 24 hours", detail: "A real clinician — not an algorithm — reviews your case and responds." },
+                  { step: "Licensed provider review within 24 hours", detail: "A real clinician — not an algorithm — reviews your case and makes a clinical determination independently." },
                   { step: "CBT-I protocol assigned by your provider", detail: "Your provider assigns a CBT-I protocol as part of your clinical outcome. Sleepgenic connects you — your provider delivers the determination." },
-                  { step: "Medication where clinically indicated", detail: "Trazodone off-label or FDA-approved orexin antagonists like Quviviq — step-up only." },
+                  { step: "Prescription where clinically indicated", detail: "Trazodone or FDA-approved orexin antagonists like Quviviq — prescribed by your provider where appropriate." },
                 ].map((item, i) => (
                   <div key={i} style={{
                     background: S.surface, border: `1px solid ${S.border}`,
@@ -245,14 +236,14 @@ export default function Home() {
           </div>
           <div style={{ display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gap: "1px", background: S.border }}>
             {[
-              { icon: "◈", text: "You track HRV on a wearable and the numbers haven't been right for months." },
-              { icon: "◈", text: "You’ve already tried consumer sleep advice and still need clinical intervention." },
-              { icon: "◈", text: "You want a clinical answer, not another app that plays white noise." },
-              { icon: "◈", text: "You’re not willing to wait a year for a specialist who might prescribe Ambien anyway." },
-            ].map((item, i) => (
+              "You track HRV on a wearable and the numbers haven\u2019t been right for months.",
+              "You\u2019ve already tried consumer sleep advice and still need clinical intervention.",
+              "You want a clinical answer, not another app that plays white noise.",
+              "You\u2019re not willing to wait a year for a specialist who might prescribe Ambien anyway.",
+            ].map((text, i) => (
               <div key={i} style={{ background: S.bg, padding: "2rem 2.5rem", display: "flex", gap: "1.25rem", alignItems: "flex-start" }}>
-                <span style={{ fontFamily: S.mono, color: S.accent, fontSize: "1rem", marginTop: "0.1rem", flexShrink: 0 }}>{item.icon}</span>
-                <p style={{ fontFamily: S.syne, fontSize: "1rem", lineHeight: 1.6, color: S.text2 }}>{item.text}</p>
+                <span style={{ fontFamily: S.mono, color: S.accent, fontSize: "1rem", marginTop: "0.1rem", flexShrink: 0 }}>◈</span>
+                <p style={{ fontFamily: S.syne, fontSize: "1rem", lineHeight: 1.6, color: S.text2 }}>{text}</p>
               </div>
             ))}
           </div>
@@ -277,10 +268,10 @@ export default function Home() {
           </div>
           <div style={{ display: "flex", flexDirection: "column", gap: "0.75rem" }}>
             {[
-              "Biometric intake assessment",
-              "Licensed provider review within 24 hours",
+              "10-question biometric intake assessment",
+              "Licensed provider clinical review within 24 hours",
               "CBT-I protocol where indicated",
-              "Medication management where indicated",
+              "Prescription where clinically indicated — trazodone or FDA-approved orexin antagonist",
               "Continued access to licensed clinical oversight",
               "HSA/FSA eligible",
             ].map((item) => (
@@ -314,9 +305,9 @@ export default function Home() {
           </div>
           <h2 style={{ fontFamily: S.garamond, fontSize: "clamp(2.5rem, 5vw, 4rem)", fontWeight: 500, color: S.text, lineHeight: 1.15, marginBottom: "1.5rem" }}>
             Get reviewed by a licensed provider.<br />
-            <em style={{ color: S.text2 }}>No referral loop.</em>
+            <em style={{ color: S.text2 }}>No referral. No waitlist.</em>
           </h2>
-          <p style={{ fontFamily: S.syne, fontSize: "1rem", color: S.text2, marginBottom: "2.5rem", maxWidth: 480, margin: "0 auto 2.5rem" }}>
+          <p style={{ fontFamily: S.syne, fontSize: "1rem", color: S.text2, maxWidth: 480, margin: "0 auto 2.5rem" }}>
             10 questions. 5 minutes. Licensed provider review within 24 hours.
           </p>
           <div style={{ display: "flex", gap: "1rem", justifyContent: "center", flexWrap: "wrap" }}>
