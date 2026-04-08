@@ -20,7 +20,7 @@ export default function AboutPage() {
     <main style={{ background: S.bg, minHeight: "100vh", paddingTop: 64 }}>
 
       {/* HERO */}
-      <section style={{ padding: "5rem 2rem", borderBottom: `1px solid ${S.border}` }}>
+      <section className="about-hero section-pad" style={{ padding: "5rem 2rem", borderBottom: `1px solid ${S.border}` }}>
         <div style={{ maxWidth: 980, margin: "0 auto" }}>
           <div style={{ fontFamily: S.mono, color: S.accent, fontSize: "0.72rem", letterSpacing: "0.16em", textTransform: "uppercase", marginBottom: "1rem" }}>
             Why Sleepgenic Exists
@@ -36,8 +36,8 @@ export default function AboutPage() {
       </section>
 
       {/* BODY */}
-      <section style={{ padding: "4rem 2rem", borderBottom: `1px solid ${S.border}` }}>
-        <div style={{ maxWidth: 980, margin: "0 auto", display: "grid", gridTemplateColumns: "1fr 1fr", gap: "3rem" }}>
+      <section className="about-body section-pad" style={{ padding: "4rem 2rem", borderBottom: `1px solid ${S.border}` }}>
+        <div className="about-body-grid grid-2col" style={{ maxWidth: 980, margin: "0 auto", display: "grid", gridTemplateColumns: "1fr 1fr", gap: "3rem" }}>
           <div>
             <div style={{ fontFamily: S.mono, color: S.accent, fontSize: "0.68rem", letterSpacing: "0.14em", textTransform: "uppercase", marginBottom: "1rem" }}>
               The Access Gap
@@ -64,7 +64,7 @@ export default function AboutPage() {
       </section>
 
       {/* THREE PRINCIPLES */}
-      <section style={{ padding: "3.5rem 2rem", background: S.bg2, borderBottom: `1px solid ${S.border}` }}>
+      <section className="about-principles section-pad" style={{ padding: "3.5rem 2rem", background: S.bg2, borderBottom: `1px solid ${S.border}` }}>
         <div style={{ maxWidth: 980, margin: "0 auto", display: "grid", gap: "1rem" }}>
           {[
             { n: "01", text: "Sleepgenic is the distribution layer for sleep medicine access. Not a therapy platform. Not a coaching service. Access." },
@@ -80,7 +80,7 @@ export default function AboutPage() {
       </section>
 
       {/* CTA */}
-      <section style={{ padding: "4rem 2rem", textAlign: "center" }}>
+      <section className="about-cta section-pad" style={{ padding: "4rem 2rem", textAlign: "center" }}>
         <div style={{ maxWidth: 980, margin: "0 auto" }}>
           <h2 style={{ fontFamily: S.garamond, color: S.text, fontSize: "clamp(2rem, 4vw, 3rem)", fontWeight: 500, lineHeight: 1.2, marginBottom: "1rem" }}>
             Cash-pay sleep medicine access.<br />
@@ -94,6 +94,8 @@ export default function AboutPage() {
           </Link>
         </div>
       </section>
+
+
 
       <footer style={{ borderTop: `1px solid ${S.border}`, padding: "1.5rem 2rem 2rem" }}>
         <div style={{ maxWidth: 980, margin: "0 auto", fontFamily: S.mono, color: S.text3, fontSize: "0.7rem", letterSpacing: "0.06em" }}>

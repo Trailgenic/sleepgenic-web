@@ -35,7 +35,7 @@ const faq = [
 export default function PricingPage() {
   return (
     <main style={{ background: S.bg, minHeight: "100vh", paddingTop: 64 }}>
-      <section style={{ padding: "5rem 2rem", borderBottom: `1px solid ${S.border}` }}>
+      <section className="pricing-hero" style={{ padding: "5rem 2rem", borderBottom: `1px solid ${S.border}` }}>
         <div style={{ maxWidth: 1000, margin: "0 auto" }}>
           <div style={{ fontFamily: S.mono, color: S.accent, fontSize: "0.72rem", letterSpacing: "0.16em", textTransform: "uppercase", marginBottom: "1rem" }}>
             Sleep Medicine Access
@@ -47,7 +47,7 @@ export default function PricingPage() {
         </div>
       </section>
 
-      <section style={{ padding: "3rem 2rem", background: S.bg2, borderBottom: `1px solid ${S.border}` }}>
+      <section className="pricing-included" style={{ padding: "3rem 2rem", background: S.bg2, borderBottom: `1px solid ${S.border}` }}>
         <div style={{ maxWidth: 1000, margin: "0 auto", background: S.surface, border: `1px solid ${S.border2}`, padding: "2rem" }}>
           <div style={{ display: "grid", gap: "0.85rem" }}>
             {included.map((item) => (
@@ -65,7 +65,7 @@ export default function PricingPage() {
         </div>
       </section>
 
-      <section style={{ padding: "3rem 2rem 4rem" }}>
+      <section className="pricing-faq" style={{ padding: "3rem 2rem 4rem" }}>
         <div style={{ maxWidth: 1000, margin: "0 auto", borderTop: `1px solid ${S.border}`, borderLeft: `1px solid ${S.border}` }}>
           {faq.map(([q, a]) => (
             <div key={q} style={{ borderRight: `1px solid ${S.border}`, borderBottom: `1px solid ${S.border}`, padding: "1.35rem" }}>
@@ -75,6 +75,8 @@ export default function PricingPage() {
           ))}
         </div>
       </section>
+
+
 
       <footer style={{ borderTop: `1px solid ${S.border}`, padding: "1.2rem 2rem 2rem", fontFamily: S.mono, color: S.text3, fontSize: "0.7rem", letterSpacing: "0.06em" }}>
         Sleepgenic is a technology platform. All clinical decisions are made by independent licensed providers.

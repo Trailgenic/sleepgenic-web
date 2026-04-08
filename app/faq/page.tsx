@@ -32,7 +32,7 @@ const qa = [
 export default function FaqPage() {
   return (
     <main style={{ background: S.bg, minHeight: "100vh", paddingTop: 64 }}>
-      <section style={{ padding: "5rem 2rem", borderBottom: `1px solid ${S.border}` }}>
+      <section className="faq-hero" style={{ padding: "5rem 2rem", borderBottom: `1px solid ${S.border}` }}>
         <div style={{ maxWidth: 1000, margin: "0 auto" }}>
           <div style={{ fontFamily: S.mono, color: S.accent, fontSize: "0.72rem", letterSpacing: "0.16em", textTransform: "uppercase", marginBottom: "1rem" }}>
             Frequently Asked Questions
@@ -43,7 +43,7 @@ export default function FaqPage() {
         </div>
       </section>
 
-      <section style={{ padding: "3rem 2rem 4rem", background: S.bg2, borderBottom: `1px solid ${S.border}` }}>
+      <section className="faq-list" style={{ padding: "3rem 2rem 4rem", background: S.bg2, borderBottom: `1px solid ${S.border}` }}>
         <div style={{ maxWidth: 1000, margin: "0 auto", display: "grid", gap: "0.8rem" }}>
           {qa.map(([question, answer], index) => (
             <div key={question} style={{ border: `1px solid ${S.border}`, background: S.surface, padding: "1.3rem 1.4rem" }}>
@@ -58,6 +58,8 @@ export default function FaqPage() {
           ))}
         </div>
       </section>
+
+
 
       <footer style={{ borderTop: `1px solid ${S.border}`, padding: "1.5rem 2rem 2rem", display: "flex", alignItems: "center", justifyContent: "space-between", gap: "1rem", flexWrap: "wrap" }}>
         <div style={{ fontFamily: S.mono, color: S.text3, fontSize: "0.7rem", letterSpacing: "0.06em" }}>
