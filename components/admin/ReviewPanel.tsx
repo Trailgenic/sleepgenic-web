@@ -1,15 +1,13 @@
 "use client";
-
 import { useState } from "react";
-import { useRouter } from "next/navigation";
 
-type Outcome = "cbti" | "prescription" | "both" | "follow_up" | "not_a_candidate";
+type Outcome = "cbti_protocol" | "prescription_recommended" | "both" | "followup_required" | "not_a_candidate";
 
 const options: Array<{ value: Outcome; label: string; subtext: string }> = [
-  { value: "cbti", label: "CBT-I Protocol", subtext: "Behavioral protocol, no medication" },
-  { value: "prescription", label: "Prescription Recommended", subtext: "Medication indicated" },
+  { value: "cbti_protocol", label: "CBT-I Protocol", subtext: "Behavioral protocol, no medication" },
+  { value: "prescription_recommended", label: "Prescription Recommended", subtext: "Medication indicated" },
   { value: "both", label: "Both — CBT-I + Prescription", subtext: "Behavioral + medication" },
-  { value: "follow_up", label: "Follow-Up Required", subtext: "More information needed" },
+  { value: "followup_required", label: "Follow-Up Required", subtext: "More information needed" },
   { value: "not_a_candidate", label: "Not a Candidate", subtext: "Not appropriate for async care" },
 ];
 
@@ -27,25 +25,35 @@ export default function ReviewPanel({
   const [outcome, setOutcome] = useState<Outcome | "">("");
   const [notes, setNotes] = useState("");
   const [saving, setSaving] = useState(false);
-  const router = useRouter();
+  const [error, setError] = useState("");
 
   async function submitReview() {
     if (!outcome) return;
     setSaving(true);
-    const response = await fetch(`/api/admin/intake/${id}/submit-review`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        outcome,
-        outcome_notes: notes,
-        reviewer_email: reviewedBy,
-      }),
-    });
-    setSaving(false);
+    setError("");
 
-    if (response.ok) {
-      router.push("/admin/dashboard");
-      router.refresh();
+    try {
+      const response = await fetch(`/api/admin/intake/${id}/submit-review`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          outcome,
+          outcome_notes: notes,
+          reviewer_email: reviewedBy,
+        }),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        window.location.href = "/admin/dashboard";
+      } else {
+        setError(data.error ?? "Submission failed");
+        setSaving(false);
+      }
+    } catch {
+      setError("Network error — please try again");
+      setSaving(false);
     }
   }
 
@@ -63,13 +71,16 @@ export default function ReviewPanel({
             option.value === "not_a_candidate"
               ? "bg-[#ef4444] text-white border-[#ef4444]"
               : "bg-[var(--accent)] text-white border-[var(--accent)]";
-
           return (
             <button
               key={option.value}
               onClick={() => setOutcome(option.value)}
               type="button"
-              className={`w-full rounded-lg border p-3 text-left transition ${isSelected ? selectedClass : "border-[var(--border-2)] bg-[var(--surface)] hover:bg-[var(--surface-2)]"}`}
+              className={`w-full rounded-lg border p-3 text-left transition ${
+                isSelected
+                  ? selectedClass
+                  : "border-[var(--border-2)] bg-[var(--surface)] hover:bg-[var(--surface-2)]"
+              }`}
             >
               <p className="font-semibold">{option.label}</p>
               <p className="text-xs opacity-90">{option.subtext}</p>
@@ -78,13 +89,19 @@ export default function ReviewPanel({
         })}
       </div>
 
-      <label className="mt-6 block font-['DM_Mono'] text-xs uppercase tracking-[0.12em] text-[var(--text-2)]">Provider Notes</label>
+      <label className="mt-6 block font-['DM_Mono'] text-xs uppercase tracking-[0.12em] text-[var(--text-2)]">
+        Provider Notes
+      </label>
       <textarea
         className="mt-2 min-h-[160px] w-full rounded-lg border border-[var(--border-2)] bg-[var(--bg-2)] p-3 text-sm outline-none focus:border-[var(--accent)]"
         placeholder="Clinical reasoning, specific recommendations, follow-up instructions... (internal only, not shared with patient)"
         value={notes}
         onChange={(event) => setNotes(event.target.value)}
       />
+
+      {error && (
+        <p className="mt-2 text-sm text-[#ef4444]">{error}</p>
+      )}
 
       <button
         type="button"
