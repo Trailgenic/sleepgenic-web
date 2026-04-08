@@ -10,6 +10,14 @@ const stripe = stripeSecretKey
     })
   : null;
 
+export async function GET() {
+  return NextResponse.json({
+    stripeKeyPresent: !!process.env.STRIPE_SECRET_KEY,
+    stripeKeyPrefix: process.env.STRIPE_SECRET_KEY?.substring(0, 12) ?? "missing",
+    priceId: process.env.STRIPE_PRICE_ID ?? "missing",
+  });
+}
+
 export async function POST(req: Request) {
   try {
     if (!stripe || !stripePriceId) {
@@ -69,7 +77,13 @@ export async function POST(req: Request) {
       customerId: customer.id,
     });
   } catch (error) {
-    console.error("CHECKOUT_CREATE_SESSION_ERROR", error);
+    console.error("Stripe error details:", {
+      message: error instanceof Error ? error.message : String(error),
+      stripeKey: process.env.STRIPE_SECRET_KEY
+        ? "present (starts with: " + process.env.STRIPE_SECRET_KEY.substring(0, 12) + "...)"
+        : "MISSING",
+      priceId: process.env.STRIPE_PRICE_ID ?? "MISSING",
+    });
     return NextResponse.json(
       { error: "Unable to create checkout session." },
       { status: 500 },
