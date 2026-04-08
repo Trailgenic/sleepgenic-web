@@ -38,7 +38,7 @@ const steps = [
 export default function HowItWorksPage() {
   return (
     <main style={{ background: S.bg, minHeight: "100vh", paddingTop: 64 }}>
-      <section style={{ padding: "5rem 2rem 4rem", borderBottom: `1px solid ${S.border}` }}>
+      <section className="hiw-hero" style={{ padding: "5rem 2rem 4rem", borderBottom: `1px solid ${S.border}` }}>
         <div style={{ maxWidth: 1100, margin: "0 auto" }}>
           <div style={{ fontFamily: S.mono, color: S.accent, fontSize: "0.72rem", letterSpacing: "0.16em", textTransform: "uppercase", marginBottom: "1rem" }}>
             Process Overview
@@ -52,10 +52,10 @@ export default function HowItWorksPage() {
         </div>
       </section>
 
-      <section style={{ padding: "4rem 2rem", background: S.bg2, borderBottom: `1px solid ${S.border}` }}>
+      <section className="hiw-steps" style={{ padding: "4rem 2rem", background: S.bg2, borderBottom: `1px solid ${S.border}` }}>
         <div style={{ maxWidth: 1100, margin: "0 auto", display: "grid", gap: "1rem" }}>
           {steps.map((item, index) => (
-            <div key={item.title} style={{ background: S.surface, border: `1px solid ${S.border2}`, padding: "1.5rem", display: "grid", gridTemplateColumns: "120px 1fr", gap: "1.5rem", alignItems: "start" }}>
+            <div key={item.title} className="hiw-step-card" style={{ background: S.surface, border: `1px solid ${S.border2}`, padding: "1.5rem", display: "grid", gridTemplateColumns: "120px 1fr", gap: "1.5rem", alignItems: "start" }}>
               <div style={{ fontFamily: S.mono, color: S.accent, fontSize: "0.72rem", letterSpacing: "0.12em", textTransform: "uppercase" }}>
                 Step 0{index + 1}
               </div>
@@ -68,8 +68,8 @@ export default function HowItWorksPage() {
         </div>
       </section>
 
-      <section style={{ padding: "4rem 2rem 5rem" }}>
-        <div style={{ maxWidth: 1100, margin: "0 auto", display: "grid", gridTemplateColumns: "1fr 1fr", gap: "2rem" }}>
+      <section className="hiw-bottom" style={{ padding: "4rem 2rem 5rem" }}>
+        <div className="hiw-bottom-grid" style={{ maxWidth: 1100, margin: "0 auto", display: "grid", gridTemplateColumns: "1fr 1fr", gap: "2rem" }}>
           <div style={{ background: S.surface, border: `1px solid ${S.border}`, padding: "2rem" }}>
             <div style={{ fontFamily: S.mono, color: S.green, fontSize: "0.7rem", letterSpacing: "0.15em", textTransform: "uppercase", marginBottom: "0.9rem" }}>
               Evidence Standard
@@ -91,6 +91,23 @@ export default function HowItWorksPage() {
           </div>
         </div>
       </section>
+
+
+      <style jsx global>{`
+        @media (max-width: 768px) {
+          .hiw-hero,
+          .hiw-steps,
+          .hiw-bottom {
+            padding-top: 3rem !important;
+            padding-bottom: 3rem !important;
+          }
+
+          .hiw-step-card,
+          .hiw-bottom-grid {
+            grid-template-columns: 1fr !important;
+          }
+        }
+      `}</style>
 
       <footer style={{ borderTop: `1px solid ${S.border}`, padding: "1.2rem 2rem 2rem", fontFamily: S.mono, color: S.text3, fontSize: "0.7rem", letterSpacing: "0.06em" }}>
         Sleepgenic is a technology platform. All clinical decisions are made by independent licensed providers.

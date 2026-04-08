@@ -162,14 +162,14 @@ export default function CheckoutPage() {
   };
 
   return (
-    <main style={{ minHeight: "100vh", background: "#080c0f", color: "#e8edf2", paddingTop: 88 }}>
+    <main className="checkout-page" style={{ minHeight: "100vh", background: "#080c0f", color: "#e8edf2", paddingTop: 88 }}>
       {/* Stripe test cards:
           Success: 4242 4242 4242 4242
           HSA/FSA: 4000 0566 5566 5556
           Decline: 4000 0000 0000 9995
           Use any future expiry date and any 3-digit CVC */}
-      <section style={{ maxWidth: 1120, margin: "0 auto", padding: "1.5rem 1rem 3rem" }}>
-        <div
+      <section className="checkout-section" style={{ maxWidth: 1120, margin: "0 auto", padding: "1.5rem 1rem 3rem" }}>
+        <div className="checkout-grid"
           style={{
             display: "grid",
             gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))",
@@ -290,6 +290,25 @@ export default function CheckoutPage() {
           </div>
         </div>
       </section>
+
+      <style jsx global>{`
+        @media (max-width: 768px) {
+          .checkout-section {
+            padding: 1.5rem 1rem 2rem !important;
+          }
+
+          .checkout-grid {
+            grid-template-columns: 1fr !important;
+          }
+
+          .checkout-page input,
+          .checkout-page button,
+          .checkout-page .StripeElement,
+          .checkout-page iframe {
+            width: 100% !important;
+          }
+        }
+      `}</style>
 
       <footer
         style={{

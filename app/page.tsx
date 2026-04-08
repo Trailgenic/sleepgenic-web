@@ -23,7 +23,7 @@ export default function Home() {
     <main style={{ background: S.bg, minHeight: "100vh" }}>
 
       {/* HERO */}
-      <section style={{
+      <section className="home-hero" style={{
         minHeight: "100vh",
         display: "flex",
         alignItems: "center",
@@ -96,7 +96,7 @@ export default function Home() {
               </Link>
             </div>
 
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "2rem", maxWidth: 560 }}>
+            <div className="home-hero-stats" style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "2rem", maxWidth: 560 }}>
               {[
                 ["30M", "Diagnosed insomnia patients in the US"],
                 ["< 500", "Board-certified CBT-I specialists nationwide"],
@@ -111,7 +111,7 @@ export default function Home() {
           </div>
         </div>
 
-        <div style={{
+        <div className="home-floating-panel" style={{
           position: "absolute", right: "4vw", top: "50%", transform: "translateY(-50%)",
           width: 280, display: "flex", flexDirection: "column", gap: "0.75rem",
           opacity: 0.85,
@@ -145,13 +145,13 @@ export default function Home() {
       </section>
 
       {/* PROBLEM / SOLUTION */}
-      <section style={{
+      <section className="home-problem-solution" style={{
         borderTop: `1px solid ${S.border}`, borderBottom: `1px solid ${S.border}`,
         background: S.bg2,
         padding: "6rem 2rem",
       }}>
         <div style={{ maxWidth: 1200, margin: "0 auto" }}>
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "6rem", alignItems: "start" }}>
+          <div className="home-problem-grid" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "6rem", alignItems: "start" }}>
             <div>
               <div style={{ fontFamily: S.mono, fontSize: "0.7rem", letterSpacing: "0.15em", textTransform: "uppercase", color: S.accent, marginBottom: "1.5rem" }}>
                 The Problem
@@ -202,15 +202,15 @@ export default function Home() {
       </section>
 
       {/* CREDIBILITY SIGNALS */}
-      <section style={{ padding: "5rem 2rem", background: S.bg }}>
+      <section className="home-credibility" style={{ padding: "5rem 2rem", background: S.bg }}>
         <div style={{ maxWidth: 1200, margin: "0 auto" }}>
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "0", borderTop: `1px solid ${S.border}`, borderLeft: `1px solid ${S.border}` }}>
+          <div className="home-credibility-grid" style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "0", borderTop: `1px solid ${S.border}`, borderLeft: `1px solid ${S.border}` }}>
             {[
               { tag: "AASM Guideline", title: "CBT-I is first-line.", body: "The American Academy of Sleep Medicine recommends CBT-I before medication for chronic insomnia. We lead with the evidence." },
               { tag: "Provider-led", title: "Licensed clinicians. Not a chatbot.", body: "Every Sleepgenic patient has their case reviewed by a licensed medical provider. AI assists. Humans decide." },
               { tag: "No Insurance Required", title: "$149/month. HSA/FSA eligible.", body: "Cash-pay means no pre-authorization, no formulary fights, no step therapy. You pay, you get treated." },
             ].map((item) => (
-              <div key={item.tag} style={{
+              <div key={item.tag} className="home-credibility-card" style={{
                 borderRight: `1px solid ${S.border}`, borderBottom: `1px solid ${S.border}`,
                 padding: "2.5rem",
               }}>
@@ -224,7 +224,7 @@ export default function Home() {
       </section>
 
       {/* WHO WE SERVE */}
-      <section style={{ padding: "6rem 2rem", background: S.bg2, borderTop: `1px solid ${S.border}` }}>
+      <section className="home-who" style={{ padding: "6rem 2rem", background: S.bg2, borderTop: `1px solid ${S.border}` }}>
         <div style={{ maxWidth: 1200, margin: "0 auto" }}>
           <div style={{ maxWidth: 640, marginBottom: "3rem" }}>
             <div style={{ fontFamily: S.mono, fontSize: "0.7rem", letterSpacing: "0.15em", textTransform: "uppercase", color: S.accent, marginBottom: "1rem" }}>
@@ -234,7 +234,7 @@ export default function Home() {
               You already know something is wrong.
             </h2>
           </div>
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gap: "1px", background: S.border }}>
+          <div className="home-who-grid" style={{ display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gap: "1px", background: S.border }}>
             {[
               "You track HRV on a wearable and the numbers haven\u2019t been right for months.",
               "You\u2019ve already tried consumer sleep advice and still need clinical intervention.",
@@ -251,8 +251,8 @@ export default function Home() {
       </section>
 
       {/* PRICING CALLOUT */}
-      <section style={{ padding: "6rem 2rem", background: S.bg }}>
-        <div style={{ maxWidth: 1200, margin: "0 auto", display: "grid", gridTemplateColumns: "1fr 1fr", gap: "6rem", alignItems: "center" }}>
+      <section className="home-pricing" style={{ padding: "6rem 2rem", background: S.bg }}>
+        <div className="home-pricing-grid" style={{ maxWidth: 1200, margin: "0 auto", display: "grid", gridTemplateColumns: "1fr 1fr", gap: "6rem", alignItems: "center" }}>
           <div>
             <div style={{ fontFamily: S.mono, fontSize: "0.7rem", letterSpacing: "0.15em", textTransform: "uppercase", color: S.accent, marginBottom: "1rem" }}>
               Pricing
@@ -285,7 +285,7 @@ export default function Home() {
       </section>
 
       {/* BOTTOM CTA */}
-      <section style={{
+      <section className="home-bottom-cta" style={{
         padding: "6rem 2rem",
         borderTop: `1px solid ${S.border}`,
         background: "linear-gradient(to bottom, #080c0f, #0a1018)",
@@ -310,7 +310,7 @@ export default function Home() {
           <p style={{ fontFamily: S.syne, fontSize: "1rem", color: S.text2, maxWidth: 480, margin: "0 auto 2.5rem" }}>
             10 questions. 5 minutes. Licensed provider review within 24 hours.
           </p>
-          <div style={{ display: "flex", gap: "1rem", justifyContent: "center", flexWrap: "wrap" }}>
+          <div className="home-bottom-buttons" style={{ display: "flex", gap: "1rem", justifyContent: "center", flexWrap: "wrap" }}>
             <Link href="/intake/1" style={{
               fontFamily: S.syne, fontWeight: 600, fontSize: "0.875rem",
               letterSpacing: "0.08em", textTransform: "uppercase",
@@ -333,7 +333,7 @@ export default function Home() {
       </section>
 
      {/* FOOTER */}
-<footer style={{
+<footer className="home-footer" style={{
   borderTop: `1px solid ${S.border}`,
   padding: "1.5rem 2rem",
   background: S.bg,
@@ -341,15 +341,86 @@ export default function Home() {
   flexWrap: "wrap", gap: "1rem",
 }}>
   <div style={{ fontFamily: S.syne, fontWeight: 700, fontSize: "0.9rem", letterSpacing: "0.04em", color: S.text }}>SLEEPGENIC</div>
-  <div style={{ display: "flex", gap: "1.5rem", alignItems: "center" }}>
+  <div className="home-footer-links" style={{ display: "flex", gap: "1.5rem", alignItems: "center" }}>
     {[["Privacy", "#"], ["Terms", "#"], ["About", "/about"]].map(([l, h]) => (
       <a key={l} href={h} style={{ fontFamily: S.syne, fontSize: "0.8rem", color: S.text2, textDecoration: "none", letterSpacing: "0.05em" }}>{l}</a>
     ))}
   </div>
-  <div style={{ fontFamily: S.mono, fontSize: "0.65rem", color: S.text3, letterSpacing: "0.06em", maxWidth: 480, textAlign: "right" }}>
+  <div className="home-footer-disclaimer" style={{ fontFamily: S.mono, fontSize: "0.65rem", color: S.text3, letterSpacing: "0.06em", maxWidth: 480, textAlign: "right" }}>
     Sleepgenic is a technology platform. All clinical decisions are made by independent licensed providers.
   </div>
 </footer>
+      <style jsx global>{`
+        @media (max-width: 768px) {
+          .home-hero {
+            padding-top: 80px !important;
+          }
+
+          .home-floating-panel {
+            display: none !important;
+          }
+
+          .home-hero-stats {
+            grid-template-columns: 1fr !important;
+            gap: 1rem !important;
+          }
+
+          .home-problem-solution,
+          .home-who,
+          .home-pricing {
+            padding-top: 4rem !important;
+            padding-bottom: 4rem !important;
+          }
+
+          .home-problem-grid,
+          .home-pricing-grid,
+          .home-who-grid,
+          .home-credibility-grid {
+            grid-template-columns: 1fr !important;
+          }
+
+          .home-problem-grid,
+          .home-pricing-grid {
+            gap: 3rem !important;
+          }
+
+          .home-credibility-grid {
+            border-left: none !important;
+            gap: 1rem !important;
+          }
+
+          .home-credibility-card {
+            border-left: 1px solid #1e2d3d !important;
+          }
+
+          .home-bottom-cta {
+            padding: 4rem 1.5rem !important;
+          }
+
+          .home-bottom-buttons {
+            flex-direction: column !important;
+          }
+
+          .home-bottom-buttons a {
+            width: 100%;
+            text-align: center;
+          }
+
+          .home-footer {
+            flex-direction: column;
+            align-items: flex-start !important;
+          }
+
+          .home-footer-links {
+            width: 100%;
+            flex-wrap: wrap;
+          }
+
+          .home-footer-disclaimer {
+            text-align: left !important;
+          }
+        }
+      `}</style>
     </main>
   );
 }
