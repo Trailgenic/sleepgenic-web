@@ -18,7 +18,6 @@ export async function POST(request: Request) {
       },
     });
 
-    // Create subscription
     const subscription = await stripe.subscriptions.create({
       customer: customer.id,
       items: [{ price: process.env.STRIPE_PRICE_ID! }],
@@ -29,15 +28,38 @@ export async function POST(request: Request) {
       expand: ["latest_invoice.payment_intent"],
     });
 
-    // Extract client secret
-    const latestInvoice = subscription.latest_invoice as unknown as {
-      payment_intent?: { client_secret?: string };
-    } | null;
-    const clientSecret = latestInvoice?.payment_intent?.client_secret;
+    // Try multiple paths to find the client secret
+    const invoice = subscription.latest_invoice as unknown as {
+      payment_intent?: {
+        client_secret?: string;
+        id?: string;
+      } | string;
+      id?: string;
+    };
+
+    let clientSecret: string | null = null;
+
+    if (invoice?.payment_intent &&
+        typeof invoice.payment_intent === "object") {
+      clientSecret = invoice.payment_intent.client_secret ?? null;
+    }
+
+    // Fallback: if payment_intent is just an ID string,
+    // retrieve it directly
+    if (!clientSecret && invoice?.payment_intent &&
+        typeof invoice.payment_intent === "string") {
+      const pi = await stripe.paymentIntents.retrieve(
+        invoice.payment_intent
+      );
+      clientSecret = pi.client_secret;
+    }
+
+    console.log("Invoice ID:", invoice?.id);
+    console.log("Payment intent type:",
+      typeof invoice?.payment_intent);
+    console.log("Client secret found:", !!clientSecret);
 
     if (!clientSecret) {
-      console.error("No client secret found. Invoice:",
-        JSON.stringify(latestInvoice, null, 2));
       return NextResponse.json(
         { error: "No client secret returned from Stripe" },
         { status: 500 }
