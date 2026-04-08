@@ -1,26 +1,21 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
-import { ADMIN_COOKIE_NAME, validateSession } from "@/lib/adminAuth";
 
-export async function middleware(request: NextRequest) {
+export function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
-  if (!pathname.startsWith("/admin") || pathname.startsWith("/admin/login")) {
+  if (!pathname.startsWith("/admin") || pathname === "/admin/login") {
     return NextResponse.next();
   }
 
-  const token = request.cookies.get(ADMIN_COOKIE_NAME)?.value;
+  const token = request.cookies.get("sg_admin_session")?.value;
 
   if (!token) {
     return NextResponse.redirect(new URL("/admin/login", request.url));
   }
 
-  const email = await validateSession(token);
-
-  if (!email) {
-    return NextResponse.redirect(new URL("/admin/login", request.url));
-  }
-
+  // Token present — allow through
+  // Full session validation happens in the page/API route
   return NextResponse.next();
 }
 
