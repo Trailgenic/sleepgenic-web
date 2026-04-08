@@ -13,18 +13,6 @@ const stripePromise = loadStripe(
   process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY || "",
 );
 
-const appearance = {
-  theme: "night" as const,
-  variables: {
-    colorPrimary: "#3b82f6",
-    colorBackground: "#141c24",
-    colorText: "#e8edf2",
-    colorDanger: "#ef4444",
-    fontFamily: "Syne, sans-serif",
-    borderRadius: "0px",
-  },
-};
-
 function CheckoutPaymentForm({
   email,
 }: {
@@ -69,7 +57,7 @@ function CheckoutPaymentForm({
 
   return (
     <form onSubmit={onSubmit} style={{ marginTop: "1rem" }}>
-      <PaymentElement />
+      <PaymentElement options={{ layout: "tabs", paymentMethodOrder: ["card"] }} />
       {error && <p style={{ color: "#ef4444", marginTop: "0.75rem" }}>{error}</p>}
       <button
         type="submit"
@@ -156,6 +144,21 @@ export default function CheckoutPage() {
   const onEmailSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     await initializeCheckout();
+  };
+
+  const stripeOptions = {
+    clientSecret,
+    appearance: {
+      theme: "night" as const,
+      variables: {
+        colorPrimary: "#3b82f6",
+        colorBackground: "#141c24",
+        colorText: "#e8edf2",
+        colorDanger: "#ef4444",
+        fontFamily: "Syne, sans-serif",
+        borderRadius: "0px",
+      },
+    },
   };
 
   return (
@@ -280,7 +283,7 @@ export default function CheckoutPage() {
             {error && <p style={{ color: "#ef4444", marginTop: "0.75rem" }}>{error}</p>}
 
             {emailSubmitted && clientSecret && (
-              <Elements stripe={stripePromise} options={{ clientSecret, appearance }}>
+              <Elements stripe={stripePromise} options={stripeOptions}>
                 <CheckoutPaymentForm email={email.trim()} />
               </Elements>
             )}
