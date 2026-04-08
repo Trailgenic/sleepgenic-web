@@ -1,3 +1,11 @@
-export default function AdminLayout({ children }: { children: React.ReactNode }) {
-  return <div className="min-h-screen bg-[var(--bg)] text-[var(--text)]">{children}</div>;
+export default function AdminLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  return (
+    <div style={{ background: "#080c0f", minHeight: "100vh" }}>
+      {children}
+    </div>
+  );
 }
