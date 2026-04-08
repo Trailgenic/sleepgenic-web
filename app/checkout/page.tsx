@@ -57,7 +57,11 @@ function CheckoutPaymentForm({
 
   return (
     <form onSubmit={onSubmit} style={{ marginTop: "1rem" }}>
-      <PaymentElement options={{ layout: "tabs", paymentMethodOrder: ["card"] }} />
+      <PaymentElement 
+        options={{
+          layout: "tabs",
+        }}
+      />
       {error && <p style={{ color: "#ef4444", marginTop: "0.75rem" }}>{error}</p>}
       <button
         type="submit"
