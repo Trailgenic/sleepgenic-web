@@ -1,6 +1,7 @@
 // Local testing: stripe listen --forward-to localhost:3000/api/webhooks/stripe
 import { NextResponse } from "next/server";
 import Stripe from "stripe";
+import { supabaseAdmin } from "@/lib/supabase";
 
 const stripeSecretKey = process.env.STRIPE_SECRET_KEY;
 const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET;
@@ -37,6 +38,22 @@ export async function POST(req: Request) {
       const customerId = typeof subscription.customer === "string" ? subscription.customer : subscription.customer.id;
       const customer = await stripe.customers.retrieve(customerId);
       const customerEmail = !customer.deleted ? customer.email : null;
+      const intakeSubmissionId = !customer.deleted ? customer.metadata?.intake_submission_id : undefined;
+
+      if (intakeSubmissionId) {
+        const { error } = await supabaseAdmin
+          .from("intake_submissions")
+          .update({
+            stripe_customer_id: customerId,
+            stripe_subscription_id: subscription.id,
+            patient_email: customerEmail,
+          })
+          .eq("submission_id", intakeSubmissionId);
+
+        if (error) {
+          console.error("STRIPE_SUBSCRIPTION_SUPABASE_UPDATE_ERROR", error.message);
+        }
+      }
 
       console.log(`SUBSCRIPTION_CREATED: ${subscription.id} for customer ${customerId}`);
       console.log(`EMAIL_STUB: would send confirmation to ${customerEmail ?? "unknown"}`);
