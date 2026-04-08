@@ -1,6 +1,7 @@
 // Local testing: stripe listen --forward-to localhost:3000/api/webhooks/stripe
 import { NextResponse } from "next/server";
 import Stripe from "stripe";
+import { supabaseAdmin } from "@/lib/supabase";
 
 const stripeSecretKey = process.env.STRIPE_SECRET_KEY;
 const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET;
@@ -34,12 +35,43 @@ export async function POST(req: Request) {
   switch (event.type) {
     case "customer.subscription.created": {
       const subscription = event.data.object as Stripe.Subscription;
-      const customerId = typeof subscription.customer === "string" ? subscription.customer : subscription.customer.id;
-      const customer = await stripe.customers.retrieve(customerId);
-      const customerEmail = !customer.deleted ? customer.email : null;
+      const customerId = typeof subscription.customer === "string"
+        ? subscription.customer
+        : subscription.customer.id;
 
-      console.log(`SUBSCRIPTION_CREATED: ${subscription.id} for customer ${customerId}`);
-      console.log(`EMAIL_STUB: would send confirmation to ${customerEmail ?? "unknown"}`);
+      // Retrieve customer to get email and metadata
+      const customer = await stripe.customers.retrieve(customerId);
+
+      if (customer.deleted) break;
+
+      const intakeSubmissionId = customer.metadata?.intake_submission_id;
+      const customerEmail = customer.email;
+
+      console.log("SUBSCRIPTION_CREATED:", {
+        subscriptionId: subscription.id,
+        customerId,
+        intakeSubmissionId,
+        customerEmail,
+      });
+
+      if (intakeSubmissionId) {
+        const { error } = await supabaseAdmin
+          .from("intake_submissions")
+          .update({
+            stripe_customer_id: customerId,
+            stripe_subscription_id: subscription.id,
+            patient_email: customerEmail,
+          })
+          .eq("submission_id", intakeSubmissionId);
+
+        if (error) {
+          console.error("Supabase update error:", error);
+        } else {
+          console.log("Updated intake record with Stripe data");
+        }
+      }
+
+      console.log("EMAIL_STUB: would send confirmation to", customerEmail);
       break;
     }
     case "customer.subscription.deleted": {
