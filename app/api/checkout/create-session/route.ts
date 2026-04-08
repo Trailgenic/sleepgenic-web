@@ -28,40 +28,49 @@ export async function POST(request: Request) {
       expand: ["latest_invoice.payment_intent"],
     });
 
-    // Try multiple paths to find the client secret
+    // Get the payment intent ID from the invoice
     const invoice = subscription.latest_invoice as unknown as {
-      payment_intent?: {
-        client_secret?: string;
-        id?: string;
-      } | string;
-      id?: string;
+      id: string;
+      payment_intent: string | { id: string; client_secret: string } | null;
     };
 
     let clientSecret: string | null = null;
 
-    if (invoice?.payment_intent &&
-        typeof invoice.payment_intent === "object") {
-      clientSecret = invoice.payment_intent.client_secret ?? null;
+    if (!invoice?.payment_intent) {
+      return NextResponse.json(
+        { error: "No payment intent on invoice" },
+        { status: 500 }
+      );
     }
 
-    // Fallback: if payment_intent is just an ID string,
-    // retrieve it directly
-    if (!clientSecret && invoice?.payment_intent &&
-        typeof invoice.payment_intent === "string") {
+    // If expanded object
+    if (typeof invoice.payment_intent === "object" &&
+        invoice.payment_intent.client_secret) {
+      clientSecret = invoice.payment_intent.client_secret;
+    }
+
+    // If just an ID string, retrieve it directly
+    if (!clientSecret && typeof invoice.payment_intent === "string") {
       const pi = await stripe.paymentIntents.retrieve(
         invoice.payment_intent
       );
       clientSecret = pi.client_secret;
     }
 
-    console.log("Invoice ID:", invoice?.id);
-    console.log("Payment intent type:",
-      typeof invoice?.payment_intent);
-    console.log("Client secret found:", !!clientSecret);
+    // Last resort: list payment intents for customer
+    if (!clientSecret) {
+      const paymentIntents = await stripe.paymentIntents.list({
+        customer: customer.id,
+        limit: 1,
+      });
+      if (paymentIntents.data[0]?.client_secret) {
+        clientSecret = paymentIntents.data[0].client_secret;
+      }
+    }
 
     if (!clientSecret) {
       return NextResponse.json(
-        { error: "No client secret returned from Stripe" },
+        { error: "Could not retrieve client secret" },
         { status: 500 }
       );
     }
