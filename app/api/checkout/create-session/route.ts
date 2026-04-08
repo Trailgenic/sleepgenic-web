@@ -1,56 +1,27 @@
 import { NextResponse } from "next/server";
 import Stripe from "stripe";
 
-const stripeSecretKey = process.env.STRIPE_SECRET_KEY;
-const stripePriceId = process.env.STRIPE_PRICE_ID;
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
+  apiVersion: "2025-08-27.basil",
+});
 
-const stripe = stripeSecretKey
-  ? new Stripe(stripeSecretKey, {
-      apiVersion: "2025-08-27.basil",
-    })
-  : null;
-
-export async function GET() {
-  return NextResponse.json({
-    stripeKeyPresent: !!process.env.STRIPE_SECRET_KEY,
-    stripeKeyPrefix: process.env.STRIPE_SECRET_KEY?.substring(0, 12) ?? "missing",
-    priceId: process.env.STRIPE_PRICE_ID ?? "missing",
-  });
-}
-
-export async function POST(req: Request) {
+export async function POST(request: Request) {
   try {
-    if (!stripe || !stripePriceId) {
-      return NextResponse.json(
-        { error: "Stripe is not configured." },
-        { status: 500 },
-      );
-    }
+    const { email, intake_submission_id } = await request.json();
 
-    const body = await req.json();
-    const { email, intake_submission_id } = body as {
-      email?: string;
-      intake_submission_id?: string;
-    };
-
-    if (!email || !intake_submission_id) {
-      return NextResponse.json(
-        { error: "Missing required fields." },
-        { status: 400 },
-      );
-    }
-
+    // Create customer
     const customer = await stripe.customers.create({
       email,
       metadata: {
-        intake_submission_id,
+        intake_submission_id: intake_submission_id ?? "unknown",
         source: "sleepgenic-web-v1",
       },
     });
 
+    // Create subscription
     const subscription = await stripe.subscriptions.create({
       customer: customer.id,
-      items: [{ price: stripePriceId }],
+      items: [{ price: process.env.STRIPE_PRICE_ID! }],
       payment_behavior: "default_incomplete",
       payment_settings: {
         save_default_payment_method: "on_subscription",
@@ -58,35 +29,41 @@ export async function POST(req: Request) {
       expand: ["latest_invoice.payment_intent"],
     });
 
-    const invoice = subscription.latest_invoice;
-    const paymentIntent = invoice
-      ? ((invoice as unknown as { payment_intent: Stripe.PaymentIntent | null })
-          .payment_intent)
-      : null;
+    // Extract client secret
+    const latestInvoice = subscription.latest_invoice as unknown as {
+      payment_intent?: { client_secret?: string };
+    } | null;
+    const clientSecret = latestInvoice?.payment_intent?.client_secret;
 
-    if (!paymentIntent?.client_secret) {
+    if (!clientSecret) {
+      console.error("No client secret found. Invoice:",
+        JSON.stringify(latestInvoice, null, 2));
       return NextResponse.json(
-        { error: "Unable to initialize payment session." },
-        { status: 500 },
+        { error: "No client secret returned from Stripe" },
+        { status: 500 }
       );
     }
 
     return NextResponse.json({
-      clientSecret: paymentIntent.client_secret,
+      clientSecret,
       subscriptionId: subscription.id,
       customerId: customer.id,
     });
-  } catch (error) {
-    console.error("Stripe error details:", {
-      message: error instanceof Error ? error.message : String(error),
-      stripeKey: process.env.STRIPE_SECRET_KEY
-        ? "present (starts with: " + process.env.STRIPE_SECRET_KEY.substring(0, 12) + "...)"
-        : "MISSING",
-      priceId: process.env.STRIPE_PRICE_ID ?? "MISSING",
-    });
+
+  } catch (error: unknown) {
+    const err = error as { message?: string; type?: string; code?: string };
+    console.error("Stripe error:", err?.message, err?.type, err?.code);
     return NextResponse.json(
-      { error: "Unable to create checkout session." },
-      { status: 500 },
+      { error: err?.message ?? "Unknown error" },
+      { status: 500 }
     );
   }
+}
+
+export async function GET() {
+  return NextResponse.json({
+    stripeKeyPresent: !!process.env.STRIPE_SECRET_KEY,
+    stripeKeyPrefix: process.env.STRIPE_SECRET_KEY?.substring(0, 12) ?? "missing",
+    priceId: process.env.STRIPE_PRICE_ID ?? "missing",
+  });
 }
