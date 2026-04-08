@@ -1,7 +1,22 @@
+"use client";
+
+import { Suspense, useEffect } from "react";
 import Link from "next/link";
+import { useSearchParams } from "next/navigation";
 import IntakeShell from "@/components/intake/IntakeShell";
 
-export default function IntakeSubmittedPage() {
+function SubmittedContent() {
+  const searchParams = useSearchParams();
+  const submissionId = searchParams.get("submission_id");
+
+  useEffect(() => {
+    if (!submissionId) {
+      return;
+    }
+
+    sessionStorage.setItem("sleepgenic_submission_id", submissionId);
+  }, [submissionId]);
+
   return (
     <IntakeShell>
       <h1 style={{ fontFamily: "'EB Garamond', serif", fontSize: "clamp(2rem, 5vw, 3rem)", marginBottom: "1rem" }}>
@@ -11,7 +26,7 @@ export default function IntakeSubmittedPage() {
         A licensed provider will review your case within 24 hours. You&apos;ll receive a confirmation email shortly.
       </p>
       <Link
-        href="/checkout-soon"
+        href="/checkout"
         style={{
           display: "inline-block",
           textDecoration: "none",
@@ -26,5 +41,13 @@ export default function IntakeSubmittedPage() {
         Sleepgenic is a technology platform. All clinical decisions are made by independent licensed providers.
       </p>
     </IntakeShell>
+  );
+}
+
+export default function IntakeSubmittedPage() {
+  return (
+    <Suspense fallback={<div style={{ background: "#080c0f", minHeight: "100vh" }} />}>
+      <SubmittedContent />
+    </Suspense>
   );
 }
