@@ -30,31 +30,31 @@ function relativeTime(dateString: string) {
   return `${days} day${days === 1 ? "" : "s"} ago`;
 }
 
-const statusClasses: Record<string, string> = {
-  pending: "bg-[#f59e0b]/20 text-[#f59e0b]",
-  in_review: "bg-[var(--accent)]/20 text-[var(--accent)]",
-  complete: "bg-[#22c55e]/20 text-[#22c55e]",
-  flagged: "bg-[#ef4444]/20 text-[#ef4444]",
-  not_a_candidate: "bg-[#374151]/50 text-[#cbd5e1]",
+const statusColors: Record<string, string> = {
+  pending: "#f59e0b",
+  in_review: "#3b82f6",
+  complete: "#22c55e",
+  flagged: "#ef4444",
+  not_a_candidate: "#6b7280",
 };
 
 export default async function AdminDashboardPage() {
-  const { data, error } = await supabaseAdmin
+  const { data: submissions, error } = await supabaseAdmin
     .from("intake_submissions")
-    .select("id, submission_id, status, created_at, reviewed_at, patient_email, red_flags, intake_payload")
+    .select("*")
     .order("created_at", { ascending: false });
 
   if (error) {
     console.error("ADMIN_DASHBOARD_FETCH_ERROR", error.message);
   }
 
-  const submissions = (data ?? []) as IntakeRecord[];
+  const queue = (submissions ?? []) as IntakeRecord[];
   const todayStart = new Date();
   todayStart.setUTCHours(0, 0, 0, 0);
 
-  const pending = submissions.filter((item) => item.status === "pending").length;
-  const inReview = submissions.filter((item) => item.status === "in_review").length;
-  const completedToday = submissions.filter(
+  const pending = queue.filter((item) => item.status === "pending").length;
+  const inReview = queue.filter((item) => item.status === "in_review").length;
+  const completedToday = queue.filter(
     (item) => item.status === "complete" && item.reviewed_at && new Date(item.reviewed_at) >= todayStart
   ).length;
 
@@ -82,7 +82,7 @@ export default async function AdminDashboardPage() {
         <div className="rounded-lg border border-[var(--border)] bg-[var(--surface)] p-4">Pending: {pending}</div>
         <div className="rounded-lg border border-[var(--border)] bg-[var(--surface)] p-4">In Review: {inReview}</div>
         <div className="rounded-lg border border-[var(--border)] bg-[var(--surface)] p-4">Completed Today: {completedToday}</div>
-        <div className="rounded-lg border border-[var(--border)] bg-[var(--surface)] p-4">Total: {submissions.length}</div>
+        <div className="rounded-lg border border-[var(--border)] bg-[var(--surface)] p-4">Total: {queue.length}</div>
       </section>
 
       <section className="overflow-hidden rounded-xl border border-[var(--border)] bg-[var(--surface)]">
@@ -100,7 +100,7 @@ export default async function AdminDashboardPage() {
             </tr>
           </thead>
           <tbody>
-            {submissions.map((submission) => {
+            {queue.map((submission) => {
               const actionLabel = ["pending", "in_review"].includes(submission.status) ? "Review →" : "View →";
               const flags = submission.red_flags ?? [];
               const sleepDifficulty = submission.intake_payload?.sleep_difficulty_types?.[0] ?? "—";
@@ -118,8 +118,16 @@ export default async function AdminDashboardPage() {
                   <td className="px-4 py-4"><Link href={`/admin/intake/${submission.id}`}>{submission.intake_payload?.frequency ?? "—"}</Link></td>
                   <td className="px-4 py-4">{flags.length > 0 ? <span className="text-[#f59e0b]">⚠</span> : "—"}</td>
                   <td className="px-4 py-4">
-                    <span className={`rounded-full px-2 py-1 text-xs ${statusClasses[submission.status] ?? "bg-[var(--surface-2)]"}`}>
-                      {submission.status}
+                    <span style={{
+                      background: statusColors[submission.status] ?? "#6b7280",
+                      color: "#fff",
+                      padding: "0.2rem 0.6rem",
+                      fontFamily: "'DM Mono', monospace",
+                      fontSize: "0.65rem",
+                      letterSpacing: "0.08em",
+                      textTransform: "uppercase",
+                    }}>
+                      {submission.status.replace("_", " ")}
                     </span>
                   </td>
                   <td className="px-4 py-4">
