@@ -20,12 +20,12 @@ export default function Nav() {
               {label}
             </Link>
           ))}
-          <Link href="/start" style={{
+          <Link href="/intake/1" style={{
             fontFamily: "'Syne', sans-serif", fontWeight: 600, fontSize: "0.75rem",
             letterSpacing: "0.1em", textTransform: "uppercase", padding: "0.6rem 1.25rem",
             background: "#3b82f6", color: "#fff", textDecoration: "none",
           }}>
-            Start Your Assessment — Coming Soon
+            Start Your Assessment
           </Link>
         </div>
       </div>
