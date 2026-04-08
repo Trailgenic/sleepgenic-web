@@ -1,5 +1,4 @@
 "use client";
-
 import { FormEvent, useState } from "react";
 
 export default function AdminLoginPage() {
@@ -19,28 +18,14 @@ export default function AdminLoginPage() {
       body: JSON.stringify({ email, password }),
     });
 
-    const data = await response.json();
-
     setLoading(false);
 
-    if (!response.ok) {
-      setError("Invalid credentials");
-      return;
-    }
-
-    /*
-    Previous submit handler success redirect logic:
-
-    if (!response.ok) {
-      setError("Invalid credentials");
-      return;
-    }
-
-    window.location.href = "/admin/dashboard";
-    */
-    if (data.success) {
+    if (response.ok) {
       window.location.replace("/admin/dashboard");
+      return;
     }
+
+    setError("Invalid credentials");
   }
 
   return (
