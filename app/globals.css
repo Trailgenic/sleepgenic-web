@@ -30,3 +30,20 @@ body {
   -webkit-font-smoothing: antialiased;
   overflow-x: hidden;
 }
+
+@media (max-width: 768px) {
+  body {
+    font-size: 0.85rem;
+    overflow-x: hidden;
+  }
+
+  section {
+    padding-left: 1.5rem !important;
+    padding-right: 1.5rem !important;
+  }
+
+  button,
+  a {
+    min-height: 44px;
+  }
+}
