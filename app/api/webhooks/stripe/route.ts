@@ -35,10 +35,24 @@ export async function POST(req: Request) {
   switch (event.type) {
     case "customer.subscription.created": {
       const subscription = event.data.object as Stripe.Subscription;
-      const customerId = typeof subscription.customer === "string" ? subscription.customer : subscription.customer.id;
+      const customerId = typeof subscription.customer === "string"
+        ? subscription.customer
+        : subscription.customer.id;
+
+      // Retrieve customer to get email and metadata
       const customer = await stripe.customers.retrieve(customerId);
-      const customerEmail = !customer.deleted ? customer.email : null;
-      const intakeSubmissionId = !customer.deleted ? customer.metadata?.intake_submission_id : undefined;
+
+      if (customer.deleted) break;
+
+      const intakeSubmissionId = customer.metadata?.intake_submission_id;
+      const customerEmail = customer.email;
+
+      console.log("SUBSCRIPTION_CREATED:", {
+        subscriptionId: subscription.id,
+        customerId,
+        intakeSubmissionId,
+        customerEmail,
+      });
 
       if (intakeSubmissionId) {
         const { error } = await supabaseAdmin
@@ -51,12 +65,13 @@ export async function POST(req: Request) {
           .eq("submission_id", intakeSubmissionId);
 
         if (error) {
-          console.error("STRIPE_SUBSCRIPTION_SUPABASE_UPDATE_ERROR", error.message);
+          console.error("Supabase update error:", error);
+        } else {
+          console.log("Updated intake record with Stripe data");
         }
       }
 
-      console.log(`SUBSCRIPTION_CREATED: ${subscription.id} for customer ${customerId}`);
-      console.log(`EMAIL_STUB: would send confirmation to ${customerEmail ?? "unknown"}`);
+      console.log("EMAIL_STUB: would send confirmation to", customerEmail);
       break;
     }
     case "customer.subscription.deleted": {

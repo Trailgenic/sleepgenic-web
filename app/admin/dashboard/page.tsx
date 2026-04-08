@@ -1,3 +1,5 @@
+export const dynamic = "force-dynamic";
+
 import Link from "next/link";
 import AdminDashboardControls from "@/components/admin/AdminDashboardControls";
 import { supabaseAdmin } from "@/lib/supabase";
