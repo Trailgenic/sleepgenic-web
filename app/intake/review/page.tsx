@@ -61,8 +61,10 @@ export default function IntakeReviewPage() {
       body: JSON.stringify(payload),
     });
 
+    const data = await response.json();
+
     if (response.ok) {
-      router.push("/intake/submitted");
+      router.push(`/intake/submitted?submission_id=${encodeURIComponent(data.submission_id || "")}`);
       return;
     }
 
