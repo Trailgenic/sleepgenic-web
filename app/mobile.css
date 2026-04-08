@@ -1,0 +1,188 @@
+@keyframes fadeUpIn {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.nav-links {
+  display: flex;
+  gap: 2.5rem;
+  align-items: center;
+}
+
+.hero-data-panel {
+  position: absolute;
+  right: 4vw;
+}
+
+@media (max-width: 768px) {
+  body {
+    font-size: 0.85rem;
+    overflow-x: hidden;
+  }
+
+  section {
+    padding-left: 1.5rem !important;
+    padding-right: 1.5rem !important;
+  }
+
+  button,
+  a {
+    min-height: 44px;
+  }
+
+  .nav-links {
+    display: none !important;
+  }
+
+  .nav-cta {
+    padding: 0.5rem 1rem !important;
+    font-size: 0.7rem !important;
+  }
+
+  .hero-data-panel {
+    display: none !important;
+  }
+
+  .hero-stats {
+    grid-template-columns: repeat(3, 1fr) !important;
+    gap: 1rem !important;
+  }
+
+  .grid-2col {
+    grid-template-columns: 1fr !important;
+    gap: 2rem !important;
+  }
+
+  .grid-3col {
+    grid-template-columns: 1fr !important;
+  }
+
+  .section-pad {
+    padding: 3rem 1.5rem !important;
+  }
+
+  .checkout-grid {
+    grid-template-columns: 1fr !important;
+    gap: 2rem !important;
+  }
+
+  .cta-stack {
+    flex-direction: column !important;
+    align-items: stretch !important;
+  }
+
+  .cta-stack a,
+  .cta-stack button {
+    text-align: center !important;
+    width: 100% !important;
+  }
+
+  .intake-section {
+    padding: 1.5rem 1rem !important;
+  }
+
+  .intake-options-grid button {
+    width: 100% !important;
+    padding: 0.9rem 1rem !important;
+  }
+
+  .intake-nav-buttons {
+    position: sticky;
+    bottom: 0;
+    background: #080c0f;
+    padding-top: 0.75rem;
+    padding-bottom: 0.25rem;
+  }
+
+  .intake-nav-buttons button {
+    flex: 1;
+    min-height: 44px;
+  }
+
+  .intake-textarea {
+    min-height: 140px !important;
+  }
+
+  .checkout-section {
+    padding: 1.5rem 1rem 2rem !important;
+  }
+
+  .checkout-page input,
+  .checkout-page button,
+  .checkout-page iframe {
+    width: 100% !important;
+  }
+
+  .checkout-success-section {
+    padding: 1.5rem 1rem !important;
+  }
+
+  .checkout-success p {
+    font-size: 0.9rem;
+  }
+
+  .home-hero {
+    padding-top: 80px !important;
+  }
+
+  .home-problem-solution,
+  .home-who,
+  .home-pricing {
+    padding-top: 4rem !important;
+    padding-bottom: 4rem !important;
+  }
+
+  .home-credibility-grid {
+    border-left: none !important;
+    gap: 1rem !important;
+  }
+
+  .home-credibility-card {
+    border-left: 1px solid #1e2d3d !important;
+  }
+
+  .home-bottom-cta {
+    padding: 4rem 1.5rem !important;
+  }
+
+  .home-footer {
+    flex-direction: column;
+    align-items: flex-start !important;
+  }
+
+  .home-footer-links {
+    width: 100%;
+    flex-wrap: wrap;
+  }
+
+  .home-footer-disclaimer {
+    text-align: left !important;
+  }
+
+  .hiw-step-card {
+    grid-template-columns: 1fr !important;
+  }
+
+  .pricing-hero,
+  .pricing-included,
+  .pricing-faq,
+  .faq-hero,
+  .faq-list {
+    padding-top: 3rem !important;
+    padding-bottom: 3rem !important;
+  }
+
+  .faq-list h2,
+  .faq-list p,
+  .pricing-hero p,
+  .pricing-included span,
+  .pricing-faq p {
+    font-size: 0.9rem !important;
+  }
+}

@@ -116,7 +116,7 @@ export default function IntakeQuestionPage({ params }: { params: { step: string 
     selected: string | null,
     onPick: (option: string) => void,
   ) => (
-    <div style={{ display: "grid", gap: "0.75rem", marginTop: "0.85rem" }}>
+    <div className="intake-options-grid" style={{ display: "grid", gap: "0.75rem", marginTop: "0.85rem" }}>
       {options.map((option) => {
         const isSelected = selected === option;
         return (
@@ -145,7 +145,7 @@ export default function IntakeQuestionPage({ params }: { params: { step: string 
 
   return (
     <IntakeShell step={step}>
-      <style>{`@keyframes fadeUpIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }`}</style>
+      <div className="intake-section">
       <div style={{ fontFamily: "'DM Mono', monospace", color: "#8fa3b3", marginBottom: "0.9rem", fontSize: "0.8rem" }}>
         {question.label}
       </div>
@@ -166,7 +166,7 @@ export default function IntakeQuestionPage({ params }: { params: { step: string 
       )}
 
       {question.type !== "text" && question.type !== "wearable" && (
-        <div style={{ display: "grid", gap: "0.75rem", marginTop: "1.25rem" }}>
+        <div className="intake-options-grid" style={{ display: "grid", gap: "0.75rem", marginTop: "1.25rem" }}>
           {(question.options ?? []).map((option) => {
             const selected = Array.isArray(value) ? value.includes(option) : value === option;
 
@@ -281,7 +281,7 @@ export default function IntakeQuestionPage({ params }: { params: { step: string 
 
       {question.type === "text" && (
         <div style={{ marginTop: "1rem" }}>
-          <textarea
+          <textarea className="intake-textarea"
             value={intake.current_medications}
             onChange={(e) => setField("current_medications", e.target.value)}
             placeholder={question.placeholder}
@@ -299,7 +299,7 @@ export default function IntakeQuestionPage({ params }: { params: { step: string 
         </div>
       )}
 
-      <div style={{ marginTop: "2rem", display: "flex", justifyContent: "space-between", gap: "1rem" }}>
+      <div className="intake-nav-buttons" style={{ marginTop: "2rem", display: "flex", justifyContent: "space-between", gap: "1rem" }}>
         <button
           type="button"
           onClick={goBack}
@@ -331,6 +331,7 @@ export default function IntakeQuestionPage({ params }: { params: { step: string 
         >
           Next →
         </button>
+      </div>
       </div>
     </IntakeShell>
   );

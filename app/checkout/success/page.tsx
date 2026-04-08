@@ -1,6 +1,6 @@
 export default function CheckoutSuccessPage() {
   return (
-    <main
+    <main className="checkout-success"
       style={{
         minHeight: "100vh",
         background: "#080c0f",
@@ -10,7 +10,7 @@ export default function CheckoutSuccessPage() {
         paddingTop: 88,
       }}
     >
-      <section style={{ maxWidth: 760, margin: "0 auto", padding: "2rem 1rem", width: "100%" }}>
+      <section className="checkout-success-section" style={{ maxWidth: 760, margin: "0 auto", padding: "2rem 1rem", width: "100%" }}>
         <h1 style={{ fontFamily: "'EB Garamond', serif", fontSize: "clamp(2.1rem, 5vw, 3.2rem)", marginBottom: "1rem" }}>
           You&apos;re in. Your review starts now.
         </h1>
@@ -22,6 +22,7 @@ export default function CheckoutSuccessPage() {
         </p>
         <p style={{ color: "#8fa3b3" }}>Questions? Email us at hello@sleepgenic.ai</p>
       </section>
+
 
       <footer
         style={{
