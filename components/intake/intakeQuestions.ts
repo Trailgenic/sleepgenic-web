@@ -7,13 +7,13 @@ export type IntakeQuestion = {
     | "duration"
     | "frequency"
     | "daytime_impact"
-    | "wearable_device"
     | "previous_treatments"
     | "current_medications"
     | "medical_history"
     | "pregnancy_nursing"
-    | "primary_goal";
-  type: "multi" | "single" | "text";
+    | "primary_goal"
+    | "wearable";
+  type: "multi" | "single" | "text" | "wearable";
   options?: string[];
   subtext?: string;
   placeholder?: string;
@@ -68,20 +68,6 @@ export const intakeQuestions: IntakeQuestion[] = [
   {
     step: 5,
     label: "05 / 10",
-    text: "Do you track your sleep on a wearable device?",
-    field: "wearable_device",
-    type: "single",
-    options: [
-      "Yes — Garmin",
-      "Yes — Whoop",
-      "Yes — Apple Watch",
-      "Yes — other device",
-      "No",
-    ],
-  },
-  {
-    step: 6,
-    label: "06 / 10",
     text: "Have you tried any of the following for your sleep problem?",
     subtext: "Select all that apply.",
     field: "previous_treatments",
@@ -94,8 +80,8 @@ export const intakeQuestions: IntakeQuestion[] = [
     ],
   },
   {
-    step: 7,
-    label: "07 / 10",
+    step: 6,
+    label: "06 / 10",
     text: "List any prescription medications you currently take.",
     field: "current_medications",
     type: "text",
@@ -103,8 +89,8 @@ export const intakeQuestions: IntakeQuestion[] = [
     note: "Your provider needs this to check for interactions before prescribing.",
   },
   {
-    step: 8,
-    label: "08 / 10",
+    step: 7,
+    label: "07 / 10",
     text: "Do you have any of the following?",
     subtext: "Select all that apply.",
     field: "medical_history",
@@ -119,16 +105,16 @@ export const intakeQuestions: IntakeQuestion[] = [
     ],
   },
   {
-    step: 9,
-    label: "09 / 10",
+    step: 8,
+    label: "08 / 10",
     text: "Are you currently pregnant or nursing?",
     field: "pregnancy_nursing",
     type: "single",
     options: ["Yes", "No", "Not applicable"],
   },
   {
-    step: 10,
-    label: "10 / 10",
+    step: 9,
+    label: "09 / 10",
     text: "What outcome are you most hoping for from Sleepgenic?",
     field: "primary_goal",
     type: "single",
@@ -138,5 +124,12 @@ export const intakeQuestions: IntakeQuestion[] = [
       "Either — whatever my provider recommends",
       "I\'m not sure yet — I want a clinical opinion",
     ],
+  },
+  {
+    step: 10,
+    label: "10 / 10",
+    text: "Do you track your sleep with a wearable device?",
+    field: "wearable",
+    type: "wearable",
   },
 ];

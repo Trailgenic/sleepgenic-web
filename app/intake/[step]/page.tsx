@@ -22,6 +22,13 @@ function cardStyle(selected: boolean) {
   };
 }
 
+function fadeInBlock() {
+  return {
+    animation: "fadeUpIn 0.28s ease",
+    marginTop: "1rem",
+  };
+}
+
 export default function IntakeQuestionPage({ params }: { params: { step: string } }) {
   const step = Number(params.step);
   const question = intakeQuestions.find((item) => item.step === step) ?? intakeQuestions[0];
@@ -31,7 +38,7 @@ export default function IntakeQuestionPage({ params }: { params: { step: string 
   const searchParams = useSearchParams();
   const fromReview = searchParams.get("from") === "review";
 
-  const value = intake[question.field as keyof typeof intake];
+  const value = question.type === "wearable" ? intake.wearable : intake[question.field as keyof typeof intake];
 
   const goNext = useCallback(() => {
     if (fromReview) {
@@ -60,7 +67,77 @@ export default function IntakeQuestionPage({ params }: { params: { step: string 
   }, [fromReview, router, step]);
 
   const requiredComplete =
-    Array.isArray(value) ? value.length > 0 : typeof value === "string" ? value.trim().length > 0 : false;
+    question.type === "wearable"
+      ? intake.wearable.tracks_sleep === "Yes"
+        ? Boolean(intake.wearable.avg_sleep_hours && intake.wearable.sleep_need_gap)
+        : intake.wearable.tracks_sleep === "No"
+          ? Boolean(intake.wearable.non_wearable_hours)
+          : false
+      : Array.isArray(value)
+        ? value.length > 0
+        : typeof value === "string"
+          ? value.trim().length > 0
+          : false;
+
+  const setWearableField = (
+    field: "tracks_sleep" | "avg_sleep_hours" | "sleep_need_gap" | "sleep_score_range" | "non_wearable_hours",
+    nextValue: string,
+  ) => {
+    if (field === "tracks_sleep") {
+      if (nextValue === "Yes") {
+        setField("wearable", {
+          tracks_sleep: "Yes",
+          avg_sleep_hours: intake.wearable.avg_sleep_hours,
+          sleep_need_gap: intake.wearable.sleep_need_gap,
+          sleep_score_range: intake.wearable.sleep_score_range,
+          non_wearable_hours: null,
+        });
+        return;
+      }
+
+      setField("wearable", {
+        tracks_sleep: "No",
+        avg_sleep_hours: null,
+        sleep_need_gap: null,
+        sleep_score_range: null,
+        non_wearable_hours: intake.wearable.non_wearable_hours,
+      });
+      return;
+    }
+
+    setField("wearable", {
+      ...intake.wearable,
+      [field]: nextValue,
+    });
+  };
+
+  const renderSingleOptions = (
+    options: string[],
+    selected: string | null,
+    onPick: (option: string) => void,
+  ) => (
+    <div style={{ display: "grid", gap: "0.75rem", marginTop: "0.85rem" }}>
+      {options.map((option) => {
+        const isSelected = selected === option;
+        return (
+          <button
+            key={option}
+            type="button"
+            onClick={() => onPick(option)}
+            style={cardStyle(isSelected)}
+            onMouseEnter={(e) => {
+              if (!isSelected) e.currentTarget.style.borderColor = "#263545";
+            }}
+            onMouseLeave={(e) => {
+              if (!isSelected) e.currentTarget.style.borderColor = "#1e2d3d";
+            }}
+          >
+            <span>{option}</span>
+          </button>
+        );
+      })}
+    </div>
+  );
 
   if (invalidStep) {
     return <IntakeShell>Invalid intake step.</IntakeShell>;
@@ -68,6 +145,7 @@ export default function IntakeQuestionPage({ params }: { params: { step: string 
 
   return (
     <IntakeShell step={step}>
+      <style>{`@keyframes fadeUpIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }`}</style>
       <div style={{ fontFamily: "'DM Mono', monospace", color: "#8fa3b3", marginBottom: "0.9rem", fontSize: "0.8rem" }}>
         {question.label}
       </div>
@@ -87,7 +165,7 @@ export default function IntakeQuestionPage({ params }: { params: { step: string 
         <p style={{ color: "#8fa3b3", fontFamily: "'Syne', sans-serif", marginBottom: "1rem" }}>{question.subtext}</p>
       )}
 
-      {question.type !== "text" && (
+      {question.type !== "text" && question.type !== "wearable" && (
         <div style={{ display: "grid", gap: "0.75rem", marginTop: "1.25rem" }}>
           {(question.options ?? []).map((option) => {
             const selected = Array.isArray(value) ? value.includes(option) : value === option;
@@ -121,25 +199,83 @@ export default function IntakeQuestionPage({ params }: { params: { step: string 
         </div>
       )}
 
-      {question.step === 5 && intake.wearable_device && intake.wearable_device !== "No" && (
-        <div style={{ marginTop: "1rem" }}>
-          <label style={{ display: "block", marginBottom: "0.5rem", color: "#8fa3b3", fontFamily: "'Syne', sans-serif" }}>
-            What does your device show about your sleep?
-          </label>
-          <textarea
-            value={intake.wearable_notes}
-            onChange={(e) => setField("wearable_notes", e.target.value)}
-            placeholder="Average sleep score, HRV trend, deep sleep %, or anything else you\'ve noticed. Optional — your provider will review this."
-            style={{
-              width: "100%",
-              minHeight: 120,
-              background: "#141c24",
-              color: "#e8edf2",
-              border: "1px solid #1e2d3d",
-              padding: "0.9rem",
-              fontFamily: "'Syne', sans-serif",
-            }}
-          />
+      {question.type === "wearable" && (
+        <div>
+          <div style={{ marginTop: "1.25rem" }}>
+            {renderSingleOptions(["Yes", "No"], intake.wearable.tracks_sleep || null, (option) => setWearableField("tracks_sleep", option))}
+          </div>
+
+          {intake.wearable.tracks_sleep === "Yes" && (
+            <div style={fadeInBlock()}>
+              <div style={{ fontFamily: "'DM Mono', monospace", color: "#8fa3b3", fontSize: "0.75rem", marginBottom: "0.35rem" }}>10b</div>
+              <p style={{ color: "#e8edf2" }}>
+                On average, how many hours of sleep per night does your device show?
+              </p>
+              {renderSingleOptions(
+                ["Under 5 hours", "5–6 hours", "6–7 hours", "7–8 hours", "Over 8 hours"],
+                intake.wearable.avg_sleep_hours,
+                (option) => setWearableField("avg_sleep_hours", option),
+              )}
+
+              <div style={{ fontFamily: "'DM Mono', monospace", color: "#8fa3b3", fontSize: "0.75rem", marginTop: "1rem", marginBottom: "0.35rem" }}>
+                10c
+              </div>
+              <p style={{ color: "#e8edf2" }}>
+                Does your device show you&apos;re consistently falling short of your sleep need or target?
+              </p>
+              {renderSingleOptions(
+                [
+                  "Yes, by more than 1 hour",
+                  "Yes, by 30–60 minutes",
+                  "About even",
+                  "I exceed my sleep need most nights",
+                  "My device doesn't show this",
+                ],
+                intake.wearable.sleep_need_gap,
+                (option) => setWearableField("sleep_need_gap", option),
+              )}
+
+              <div style={{ fontFamily: "'DM Mono', monospace", color: "#8fa3b3", fontSize: "0.75rem", marginTop: "1rem", marginBottom: "0.2rem" }}>
+                10d
+              </div>
+              <div
+                style={{
+                  fontFamily: "'DM Mono', monospace",
+                  color: "#3b82f6",
+                  fontSize: "0.7rem",
+                  letterSpacing: "0.12em",
+                  textTransform: "uppercase",
+                }}
+              >
+                Optional
+              </div>
+              <p style={{ color: "#e8edf2", marginTop: "0.35rem" }}>
+                If your device shows an overall sleep score or quality rating, what is your typical average?
+              </p>
+              {renderSingleOptions(
+                [
+                  "Consistently poor — below 60 or red zone",
+                  "Fair — 60 to 75",
+                  "Good — above 75",
+                  "My device doesn't show a score",
+                ],
+                intake.wearable.sleep_score_range,
+                (option) => setWearableField("sleep_score_range", option),
+              )}
+            </div>
+          )}
+
+          {intake.wearable.tracks_sleep === "No" && (
+            <div style={fadeInBlock()}>
+              <div style={{ fontFamily: "'DM Mono', monospace", color: "#8fa3b3", fontSize: "0.75rem", marginBottom: "0.35rem" }}>10e</div>
+              <p style={{ color: "#e8edf2" }}>How many hours of sleep do you typically get per night?</p>
+              {renderSingleOptions(
+                ["Under 5 hours", "5–6 hours", "6–7 hours", "7–8 hours", "Over 8 hours"],
+                intake.wearable.non_wearable_hours,
+                (option) => setWearableField("non_wearable_hours", option),
+              )}
+            </div>
+          )}
         </div>
       )}
 

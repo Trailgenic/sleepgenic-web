@@ -3,13 +3,18 @@ export type IntakeState = {
   duration: string;
   frequency: string;
   daytime_impact: string;
-  wearable_device: string;
-  wearable_notes: string;
   previous_treatments: string[];
   current_medications: string;
   medical_history: string[];
   pregnancy_nursing: string;
   primary_goal: string;
+  wearable: {
+    tracks_sleep: "Yes" | "No" | "";
+    avg_sleep_hours: string | null;
+    sleep_need_gap: string | null;
+    sleep_score_range: string | null;
+    non_wearable_hours: string | null;
+  };
 };
 
 export const initialIntakeState: IntakeState = {
@@ -17,13 +22,18 @@ export const initialIntakeState: IntakeState = {
   duration: "",
   frequency: "",
   daytime_impact: "",
-  wearable_device: "",
-  wearable_notes: "",
   previous_treatments: [],
   current_medications: "",
   medical_history: [],
   pregnancy_nursing: "",
   primary_goal: "",
+  wearable: {
+    tracks_sleep: "",
+    avg_sleep_hours: null,
+    sleep_need_gap: null,
+    sleep_score_range: null,
+    non_wearable_hours: null,
+  },
 };
 
 export const redFlagRules = [
