@@ -6,28 +6,44 @@ export async function POST(request: Request) {
   try {
     const { email, password } = await request.json();
 
-    const adminEmail1 = process.env.ADMIN_EMAIL ?? "";
-    const adminHash1 = process.env.ADMIN_PASSWORD_HASH ?? "";
     const adminEmail2 = process.env.ADMIN_EMAIL_2 ?? "";
     const adminHash2 = process.env.ADMIN_PASSWORD_HASH_2 ?? "";
-
     const inputEmail = email.trim().toLowerCase();
 
-    let matchedEmail: string | null = null;
+    console.log("Login attempt:", {
+      inputEmail,
+      admin2Email: adminEmail2.trim().toLowerCase(),
+      admin2EmailMatch: inputEmail === adminEmail2.trim().toLowerCase(),
+      admin2HashLength: adminHash2.length,
+      admin2HashPrefix: adminHash2.substring(0, 7),
+    });
 
-    // Check admin 1
-    if (adminEmail1 && adminHash1 && 
-        inputEmail === adminEmail1.trim().toLowerCase()) {
-      const match = await bcrypt.compare(password, adminHash1);
-      if (match) matchedEmail = adminEmail1;
-    }
+    const admin2Match = 
+      adminEmail2 && 
+      adminHash2 && 
+      inputEmail === adminEmail2.trim().toLowerCase()
+        ? await bcrypt.compare(password, adminHash2)
+        : false;
 
-    // Check admin 2
-    if (!matchedEmail && adminEmail2 && adminHash2 && 
-        inputEmail === adminEmail2.trim().toLowerCase()) {
-      const match = await bcrypt.compare(password, adminHash2);
-      if (match) matchedEmail = adminEmail2;
-    }
+    console.log("Admin2 password match:", admin2Match);
+
+    const adminEmail1 = process.env.ADMIN_EMAIL ?? "";
+    const adminHash1 = process.env.ADMIN_PASSWORD_HASH ?? "";
+
+    const admin1Match =
+      adminEmail1 &&
+      adminHash1 &&
+      inputEmail === adminEmail1.trim().toLowerCase()
+        ? await bcrypt.compare(password, adminHash1)
+        : false;
+
+    console.log("Admin1 password match:", admin1Match);
+
+    const matchedEmail = admin1Match 
+      ? adminEmail1 
+      : admin2Match 
+        ? adminEmail2 
+        : null;
 
     if (!matchedEmail) {
       return NextResponse.json(
