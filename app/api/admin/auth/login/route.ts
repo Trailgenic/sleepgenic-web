@@ -6,51 +6,42 @@ export async function POST(request: Request) {
   try {
     const { email, password } = await request.json();
 
-    const admins = [
-      {
-        email: process.env.ADMIN_EMAIL ?? "",
-        hash: process.env.ADMIN_PASSWORD_HASH ?? "",
-      },
-      {
-        email: process.env.ADMIN_EMAIL_2 ?? "",
-        hash: process.env.ADMIN_PASSWORD_HASH_2 ?? "",
-      },
-    ].filter((a) => a.email && a.hash);
+    const adminEmail1 = process.env.ADMIN_EMAIL ?? "";
+    const adminHash1 = process.env.ADMIN_PASSWORD_HASH ?? "";
+    const adminEmail2 = process.env.ADMIN_EMAIL_2 ?? "";
+    const adminHash2 = process.env.ADMIN_PASSWORD_HASH_2 ?? "";
 
-    if (admins.length === 0) {
-      console.error("Admin credentials not configured");
-      return NextResponse.json(
-        { error: "Server configuration error" },
-        { status: 500 }
-      );
+    const inputEmail = email.trim().toLowerCase();
+
+    let matchedEmail: string | null = null;
+
+    // Check admin 1
+    if (adminEmail1 && adminHash1 && 
+        inputEmail === adminEmail1.trim().toLowerCase()) {
+      const match = await bcrypt.compare(password, adminHash1);
+      if (match) matchedEmail = adminEmail1;
     }
 
-    const matchedAdmin = await Promise.all(
-      admins.map(async (admin) => {
-        const emailMatch =
-          email.trim().toLowerCase() ===
-          admin.email.trim().toLowerCase();
-        const passwordMatch = emailMatch
-          ? await bcrypt.compare(password, admin.hash)
-          : false;
-        return emailMatch && passwordMatch ? admin : null;
-      })
-    ).then((results) => results.find(Boolean));
+    // Check admin 2
+    if (!matchedEmail && adminEmail2 && adminHash2 && 
+        inputEmail === adminEmail2.trim().toLowerCase()) {
+      const match = await bcrypt.compare(password, adminHash2);
+      if (match) matchedEmail = adminEmail2;
+    }
 
-    if (!matchedAdmin) {
+    if (!matchedEmail) {
       return NextResponse.json(
         { error: "Invalid credentials" },
         { status: 401 }
       );
     }
 
-    // Create session using matchedAdmin.email
     const token = crypto.randomUUID();
     const expiresAt = new Date(Date.now() + 8 * 60 * 60 * 1000);
 
     await supabaseAdmin.from("admin_sessions").insert({
       id: token,
-      email: matchedAdmin.email,
+      email: matchedEmail,
       expires_at: expiresAt.toISOString(),
     });
 
