@@ -1,8 +1,8 @@
 export const dynamic = "force-dynamic";
+export const revalidate = 0;
 
 import Link from "next/link";
 import AdminDashboardControls from "@/components/admin/AdminDashboardControls";
-import { supabaseAdmin } from "@/lib/supabase";
 import { getAutoReview } from "@/lib/autoReview";
 
 type IntakeRecord = {
@@ -39,7 +39,12 @@ const statusColors: Record<string, string> = {
 };
 
 export default async function AdminDashboardPage() {
-  const { data: submissions, error } = await supabaseAdmin
+  const { createClient } = await import("@supabase/supabase-js");
+  const freshClient = createClient(
+    process.env.SUPABASE_URL!,
+    process.env.SUPABASE_SERVICE_ROLE_KEY!
+  );
+  const { data: submissions, error } = await freshClient
     .from("intake_submissions")
     .select("*")
     .order("created_at", { ascending: false })
