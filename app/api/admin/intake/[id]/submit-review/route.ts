@@ -32,6 +32,27 @@ export async function POST(
       );
     }
 
+    const { data: intakeSubmission, error: intakeFetchError } = await supabaseAdmin
+      .from("intake_submissions")
+      .select("patient_email")
+      .eq("id", params.id)
+      .single();
+
+    if (intakeFetchError) {
+      console.error("Supabase fetch error:", intakeFetchError);
+      return NextResponse.json(
+        { error: intakeFetchError.message },
+        { status: 500 }
+      );
+    }
+
+    if (!intakeSubmission?.patient_email) {
+      return NextResponse.json(
+        { error: "No patient email on record" },
+        { status: 400 }
+      );
+    }
+
     // Fire outcome stub
     await fetch(
       new URL("/api/outcomes/fire", request.url).toString(),
@@ -40,7 +61,7 @@ export async function POST(
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           submission_id: params.id,
-          patient_email: reviewer_email,
+          patient_email: intakeSubmission.patient_email,
           outcome,
           outcome_notes,
           reviewed_at: new Date().toISOString(),
