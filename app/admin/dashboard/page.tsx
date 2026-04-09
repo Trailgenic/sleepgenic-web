@@ -42,7 +42,8 @@ export default async function AdminDashboardPage() {
   const { data: submissions, error } = await supabaseAdmin
     .from("intake_submissions")
     .select("*")
-    .order("created_at", { ascending: false });
+    .order("created_at", { ascending: false })
+    .limit(1000);
 
   if (error) {
     console.error("ADMIN_DASHBOARD_FETCH_ERROR", error.message);
