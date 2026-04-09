@@ -2,6 +2,7 @@
 import { NextResponse } from "next/server";
 import Stripe from "stripe";
 import { supabaseAdmin } from "@/lib/supabase";
+import { sendIntakeConfirmationEmail } from "@/lib/email";
 
 const stripeSecretKey = process.env.STRIPE_SECRET_KEY;
 const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET;
@@ -71,7 +72,15 @@ export async function POST(req: Request) {
         }
       }
 
-      console.log("EMAIL_STUB: would send confirmation to", customerEmail);
+      if (customerEmail) {
+        try {
+          await sendIntakeConfirmationEmail(customerEmail);
+          console.log("INTAKE_CONFIRMATION_SENT to:", customerEmail);
+        } catch (emailError) {
+          console.error("Email send failed:", emailError);
+          // Do not throw — email failure should not fail the webhook
+        }
+      }
       break;
     }
     case "customer.subscription.deleted": {
