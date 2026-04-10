@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 export default function CheckoutSuccessPage() {
   return (
     <main className="checkout-success"
@@ -21,6 +23,31 @@ export default function CheckoutSuccessPage() {
           Check your email for confirmation and next steps.
         </p>
         <p style={{ color: "#8fa3b3" }}>Questions? Email us at hello@sleepgenic.ai</p>
+
+        <div
+          style={{
+            marginTop: "1.5rem",
+            border: "1px solid #1e2d3d",
+            background: "#141c24",
+            borderRadius: 12,
+            padding: "0.9rem 1rem",
+            display: "inline-block",
+          }}
+        >
+          <Link
+            href="/portal/setup"
+            style={{
+              fontFamily: "'DM Mono', monospace",
+              fontSize: "0.78rem",
+              letterSpacing: "0.08em",
+              textTransform: "uppercase",
+              color: "#3b82f6",
+              textDecoration: "none",
+            }}
+          >
+            Access your patient portal →
+          </Link>
+        </div>
       </section>
 
 
