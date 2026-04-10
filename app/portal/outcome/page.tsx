@@ -8,17 +8,17 @@ import { PORTAL_COOKIE_NAME, validatePortalSession } from "@/lib/portalAuth";
 
 type OutcomeSubmission = {
   status: string;
-  outcome_type: string | null;
+  outcome: string | null;
   outcome_notes: string | null;
   reviewed_at: string | null;
 };
 
-function outcomeHeadline(outcomeType: string | null) {
-  if (outcomeType === "cbti_protocol") return "CBT-I Protocol Assigned";
-  if (outcomeType === "prescription_recommended") return "Prescription Recommended";
-  if (outcomeType === "both") return "Combined Treatment Plan";
-  if (outcomeType === "followup_required") return "Follow-Up Required";
-  if (outcomeType === "not_a_candidate") return "See Your Email for Details";
+function outcomeHeadline(outcome: string | null) {
+  if (outcome === "cbti_protocol") return "CBT-I Protocol Assigned";
+  if (outcome === "prescription_recommended") return "Prescription Recommended";
+  if (outcome === "both") return "Combined Treatment Plan";
+  if (outcome === "followup_required") return "Follow-Up Required";
+  if (outcome === "not_a_candidate") return "See Your Email for Details";
   return "Clinical Outcome";
 }
 
@@ -45,7 +45,7 @@ export default async function PortalOutcomePage() {
 
   const { data } = await freshClient
     .from("intake_submissions")
-    .select("status,outcome_type,outcome_notes,reviewed_at")
+    .select("status,outcome,outcome_notes,reviewed_at")
     .ilike("patient_email", normalizedEmail)
     .order("created_at", { ascending: false })
     .limit(1)
@@ -57,15 +57,15 @@ export default async function PortalOutcomePage() {
     redirect("/portal/dashboard");
   }
 
-  const showCbti = submission.outcome_type === "cbti_protocol" || submission.outcome_type === "both";
+  const showCbti = submission.outcome === "cbti_protocol" || submission.outcome === "both";
   const showPrescription =
-    submission.outcome_type === "prescription_recommended" || submission.outcome_type === "both";
+    submission.outcome === "prescription_recommended" || submission.outcome === "both";
 
   return (
     <main className="mx-auto max-w-4xl px-6 py-8">
       <section className="rounded-xl border border-[var(--border)] bg-[var(--surface)] p-6">
         <p className="font-['DM_Mono'] text-xs uppercase tracking-[0.08em] text-[var(--accent)]">Your Clinical Outcome</p>
-        <h1 className="mt-3 font-['Syne'] text-3xl font-bold">{outcomeHeadline(submission.outcome_type)}</h1>
+        <h1 className="mt-3 font-['Syne'] text-3xl font-bold">{outcomeHeadline(submission.outcome)}</h1>
         <p className="mt-3 text-[var(--text-2)]">
           Reviewed on {submission.reviewed_at ? new Date(submission.reviewed_at).toLocaleDateString() : "—"}
         </p>
