@@ -23,6 +23,19 @@ export default function Nav() {
               {label}
             </Link>
           ))}
+          <Link
+            href="/portal/login"
+            style={{
+              fontFamily: "'DM Mono', monospace",
+              fontSize: "0.72rem",
+              letterSpacing: "0.08em",
+              textTransform: "uppercase",
+              color: "#8fa3b3",
+              textDecoration: "none",
+            }}
+          >
+            Patient Portal
+          </Link>
           <Link href="/intake/1" className="nav-cta" style={{
             fontFamily: "'Syne', sans-serif", fontWeight: 600, fontSize: "0.75rem",
             letterSpacing: "0.1em", textTransform: "uppercase", padding: "0.6rem 1.25rem",
