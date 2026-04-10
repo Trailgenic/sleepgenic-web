@@ -93,13 +93,11 @@ export default async function PortalDashboardPage() {
           <h3 className="mt-3 font-['Syne'] text-2xl font-bold">{statusCard.title}</h3>
           <p className="mt-2 text-[var(--text-2)]">{statusCard.body}</p>
           {status === "complete" ? (
-            <Link href="/portal/outcome" className="mt-4 inline-block">
-              <button
-                type="button"
-                className="rounded-lg bg-[var(--accent)] px-4 py-3 font-['DM_Mono'] text-xs uppercase tracking-[0.08em] text-white hover:brightness-110"
-              >
-                VIEW YOUR OUTCOME →
-              </button>
+            <Link
+              href="/portal/outcome"
+              className="mt-4 inline-block rounded-lg bg-[var(--accent)] px-4 py-3 font-['DM_Mono'] text-xs uppercase tracking-[0.08em] text-white hover:brightness-110"
+            >
+              VIEW YOUR OUTCOME →
             </Link>
           ) : null}
         </section>
